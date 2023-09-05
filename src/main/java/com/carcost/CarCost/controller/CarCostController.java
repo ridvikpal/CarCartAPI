@@ -1,6 +1,6 @@
 package com.carcost.CarCost.controller;
 
-import com.carcost.CarCost.service.CarCostService;
+import com.carcost.CarCost.model.CarCostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

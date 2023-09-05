@@ -1,4 +1,4 @@
-package com.carcost.CarCost.service;
+package com.carcost.CarCost.model;
 
 import org.springframework.stereotype.Service;
 
