@@ -15,4 +15,8 @@ public class CarCostService {
     public List<String> returnModelListings(String _make, String _model, Integer _year) {
         return List.of(ChatGPTConnection.getModelInfo(_make, _model, _year));
     }
+
+    public List<String> returnCarRecommendations(String _type, String _make) {
+        return List.of(ChatGPTConnection.getCarRecommendation(_type, _make));
+    }
 }

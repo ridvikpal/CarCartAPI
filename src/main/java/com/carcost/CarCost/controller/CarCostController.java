@@ -30,4 +30,8 @@ public class CarCostController {
         return carCostService.returnModelListings(make, model, year);
     }
 
+    @GetMapping(path = "/recommendation")
+    public List<String> getRecommendation(@RequestParam String type, @RequestParam(required = false) String make){
+        return carCostService.returnCarRecommendations(type, make);
+    }
 }

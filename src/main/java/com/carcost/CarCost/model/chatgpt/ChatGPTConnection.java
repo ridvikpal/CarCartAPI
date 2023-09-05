@@ -45,7 +45,15 @@ public class ChatGPTConnection {
     public static String getMakeInfo(String _make){
         return getChatGPTResponse(
                 "gpt-3.5-turbo",
-                "Tell me about the cars offered by " + _make,
+                "Provide a short description of the car manufacturer " + _make + ". Then " +
+                        "Describe up to 5 cars in list format provided by the car manufacturer " + _make +
+                        " in the following format: \n\n " +
+                        "Name: [Output] \n\n " +
+                        "Engine: [Output] \n\n " +
+                        "Type: [Output] \n\n " +
+                        "Features: [Output] \n\n" +
+                        "MSRP: [Output]" +
+                        "Reviews: [Outputs]",
                 0.7
         );
     }
@@ -66,6 +74,21 @@ public class ChatGPTConnection {
         return getChatGPTResponse(
                 "gpt-3.5-turbo",
                 "Give me information about the following car: " + _make + " " +  _makeModel + " " + _year,
+                0.7
+        );
+    }
+
+    public static String getCarRecommendation(String _type, String _make){
+        if (_make == null || _make.trim().isEmpty()){
+            return getChatGPTResponse(
+                    "gpt-3.5-turbo",
+                    "Recommend me a " + _type + "based on reviews",
+                    0.7
+            );
+        }
+        return getChatGPTResponse(
+                "gpt-3.5-turbo",
+                "Recommend me a " + _make + " " + _type + "based on reviews",
                 0.7
         );
     }
