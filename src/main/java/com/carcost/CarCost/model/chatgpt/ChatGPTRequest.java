@@ -12,7 +12,7 @@ public class ChatGPTRequest {
     private ArrayList<Message> messages;
 
     @Component
-    private class Message {
+    public static class Message {
         private String role;
         private String content;
 
@@ -65,11 +65,9 @@ public class ChatGPTRequest {
     }
 
     @Autowired
-    public ChatGPTRequest(String model, String content, double temperature) {
+    public ChatGPTRequest(String model, ArrayList<Message> messages, double temperature) {
         this.model = model;
-        String _role = "user";
-        this.messages = new ArrayList<>();
-        this.messages.add(new Message(_role, content));
+        this.messages = messages;
         this.temperature = temperature;
     }
 }

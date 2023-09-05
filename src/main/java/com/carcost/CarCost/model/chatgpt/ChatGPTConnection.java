@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.util.ArrayList;
+
 @Component
 public class ChatGPTConnection {
     private final WebClient webClient;
@@ -23,11 +25,17 @@ public class ChatGPTConnection {
     }
 
     public String getMakeInfo(){
-        ChatGPTRequest makeInfoRequest = new ChatGPTRequest(
-                "gpt-3.5-turbo",
-                "Tell me about the cars Ferrari makes",
-                0.7
+
+        String _model = "gpt-3.5-turbo";
+        double _temperature = 0.7;
+        ChatGPTRequest.Message _message = new ChatGPTRequest.Message(
+                "user",
+                "Tell me about the cars Ferrari makes"
         );
+        ArrayList<ChatGPTRequest.Message> _messages = new ArrayList<>();
+        _messages.add(_message);
+
+        ChatGPTRequest makeInfoRequest = new ChatGPTRequest(_model, _messages, _temperature);
 
         ChatGPTResponse makeInfoObject = this.webClient.post()
                 .uri("/v1/chat/completions")
