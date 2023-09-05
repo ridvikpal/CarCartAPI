@@ -13,14 +13,18 @@ public class ChatGPTConnection {
     private final WebClient webClient;
 
     @Value("${openai.api.key}")
-    private static String apiKey;
+    private static String openAiApiKey;
+
+    @Value("${openai.api.url}")
+    private static String openAiUrl;
 
     @Autowired
     public ChatGPTConnection(WebClient.Builder webClient) {
-        this.webClient = WebClient.builder().baseUrl().build();
+        this.webClient = WebClient.builder().baseUrl(openAiUrl).build();
     }
 
-    public Mono<String> getMakeInfo(){
-        return this.webClient.get().uri("/{name}/details").retrieve().bodyToMono(String.class);
+    public String getMakeInfo(){
+        this.webClient.post().uri("/{name}/details").retrieve().bodyToFlux();
+        return "";
     }
 }
