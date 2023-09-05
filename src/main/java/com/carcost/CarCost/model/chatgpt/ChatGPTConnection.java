@@ -45,15 +45,15 @@ public class ChatGPTConnection {
     public static String getMakeInfo(String _make){
         return getChatGPTResponse(
                 "gpt-3.5-turbo",
-                "Provide a short description of the car manufacturer " + _make + ". Then " +
-                        "Describe up to 5 cars in list format provided by the car manufacturer " + _make +
+                "Provide a short description of the car manufacturer " + _make + ". Describe the " +
+                        "manufacturer based on reviews, reliability, maintenance, cost of operation, and user experience. " +
+                        " Then describe up to 5 cars in list format provided by the car manufacturer " + _make +
                         " in the following format: \n\n " +
                         "Name: [Output] \n\n " +
                         "Engine: [Output] \n\n " +
                         "Type: [Output] \n\n " +
                         "Features: [Output] \n\n" +
-                        "MSRP: [Output]" +
-                        "Reviews: [Outputs]",
+                        "MSRP: [Output]",
                 0.7
         );
     }
