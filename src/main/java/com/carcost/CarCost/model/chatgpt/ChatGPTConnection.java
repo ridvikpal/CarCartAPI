@@ -10,40 +10,64 @@ import reactor.core.publisher.Mono;
 import java.util.ArrayList;
 
 @Component
+//@PropertySource("file:openai.api")
 public class ChatGPTConnection {
-    private final WebClient webClient;
+    private static WebClient webClient;
 
-    @Value("${openai.api.key}")
     private static String openAiApiKey;
 
-    @Value("${openai.api.url}")
-    private static String openAiUrl;
+    private static final String openAiUrl = "https://api.openai.com/v1/chat/completions";
 
     @Autowired
-    public ChatGPTConnection(WebClient.Builder webClient) {
+    public ChatGPTConnection(WebClient.Builder webClient, @Value("${openai.api.key}") String openAiApiKey) {
         this.webClient = WebClient.builder().baseUrl(openAiUrl).build();
+        this.openAiApiKey = openAiApiKey;
     }
 
-    public String getMakeInfo(){
-
-        String _model = "gpt-3.5-turbo";
-        double _temperature = 0.7;
+    private static String getChatGPTResponse(String _model, String _request, double _temperature){
         ChatGPTRequest.Message _message = new ChatGPTRequest.Message(
                 "user",
-                "Tell me about the cars Ferrari makes"
+                _request
         );
         ArrayList<ChatGPTRequest.Message> _messages = new ArrayList<>();
         _messages.add(_message);
 
         ChatGPTRequest makeInfoRequest = new ChatGPTRequest(_model, _messages, _temperature);
 
-        ChatGPTResponse makeInfoObject = this.webClient.post()
-                .uri("/v1/chat/completions")
+        ChatGPTResponse makeInfoObject = webClient.post()
                 .header("Authorization", "Bearer " + openAiApiKey)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(Mono.just(makeInfoRequest), ChatGPTRequest.class)
                 .retrieve().bodyToMono(ChatGPTResponse.class).block();
 
-        return "";
+        return makeInfoObject.getChoices().get(0).getMessage().getContent();
+    }
+
+    public static String getMakeInfo(String _make){
+        return getChatGPTResponse(
+                "gpt-3.5-turbo",
+                "Tell me about the cars offered by " + _make,
+                0.7
+        );
+    }
+
+    public static String getModelInfo(String _make, String _makeModel, Integer _year){
+        if (_make == null || _make.trim().isEmpty() || _makeModel == null || _makeModel.trim().isEmpty()){
+            return "";
+        }
+
+        if (_year == null){
+            return getChatGPTResponse(
+                    "gpt-3.5-turbo",
+                    "Give me information about the following car: " + _make + " " +  _makeModel,
+                    0.7
+            );
+        }
+
+        return getChatGPTResponse(
+                "gpt-3.5-turbo",
+                "Give me information about the following car: " + _make + " " +  _makeModel + " " + _year,
+                0.7
+        );
     }
 }

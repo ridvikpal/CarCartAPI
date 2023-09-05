@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "api/v1/search")
+@RequestMapping(path = "api/v1")
 public class CarCostController {
     private final CarCostService carCostService;
 
@@ -19,9 +19,15 @@ public class CarCostController {
         this.carCostService = carCostService;
     }
 
-    @GetMapping
+    @GetMapping(path = "/search_make")
     public List<String> getAllModels(@RequestParam String make){
         return carCostService.returnAllModels(make);
+    }
+
+    @GetMapping(path = "/search_model")
+    public List<String> getModelListings(@RequestParam String make, @RequestParam String model,
+                                         @RequestParam(required = false) Integer year){
+        return carCostService.returnModelListings(make, model, year);
     }
 
 }

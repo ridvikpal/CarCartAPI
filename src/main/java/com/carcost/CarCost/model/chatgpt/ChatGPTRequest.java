@@ -5,13 +5,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
-@Component
 public class ChatGPTRequest {
     private String model;
 
     private ArrayList<Message> messages;
 
-    @Component
     public static class Message {
         private String role;
         private String content;
@@ -32,7 +30,6 @@ public class ChatGPTRequest {
             this.content = content;
         }
 
-        @Autowired
         public Message(String role, String content) {
             this.role = role;
             this.content = content;
@@ -64,7 +61,6 @@ public class ChatGPTRequest {
         this.temperature = temperature;
     }
 
-    @Autowired
     public ChatGPTRequest(String model, ArrayList<Message> messages, double temperature) {
         this.model = model;
         this.messages = messages;

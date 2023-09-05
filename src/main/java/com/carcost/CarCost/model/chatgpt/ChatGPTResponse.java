@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
-@Component
 public class ChatGPTResponse {
     private String id;
     private String object;
@@ -12,13 +11,11 @@ public class ChatGPTResponse {
     private String model;
     private ArrayList<Choice> choices;
 
-    @Component
-    private class Choice {
+    public static class Choice {
         private int index;
         private Message message;
 
-        @Component
-        private class Message {
+        public static class Message {
             private String role;
             private String content;
 
@@ -68,8 +65,7 @@ public class ChatGPTResponse {
 
     private Usage usage;
 
-    @Component
-    private class Usage {
+    private static class Usage {
         private String prompt_tokens;
         private String completion_tokens;
         private String total_tokens;
