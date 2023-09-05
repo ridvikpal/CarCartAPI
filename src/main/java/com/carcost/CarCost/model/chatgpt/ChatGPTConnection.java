@@ -10,7 +10,6 @@ import reactor.core.publisher.Mono;
 import java.util.ArrayList;
 
 @Component
-//@PropertySource("file:openai.api")
 public class ChatGPTConnection {
     private static WebClient webClient;
 
@@ -56,7 +55,7 @@ public class ChatGPTConnection {
             return "";
         }
 
-        if (_year == null){
+        if (_year == null || _year < 1950 && _year > 2021){
             return getChatGPTResponse(
                     "gpt-3.5-turbo",
                     "Give me information about the following car: " + _make + " " +  _makeModel,
