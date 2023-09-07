@@ -43,9 +43,9 @@ public class CarCostService {
         String chatGptCarRecommendation = ChatGPTConnection.getCarRecommendation(_type, _make);
         List<CarData> matchingTypeEntries;
         if (_make == null || _make.trim().isEmpty()){
-            matchingTypeEntries = carCostRepository.findAllByBody_typeContaining(_type);
+            matchingTypeEntries = carCostRepository.findAllByBodyTypeContaining(_type);
         }else{
-            matchingTypeEntries = carCostRepository.findAllByBody_typeContainingAndMakeContaining(_type, _make);
+            matchingTypeEntries = carCostRepository.findAllByBodyTypeContainingAndMakeContaining(_type, _make);
         }
         return new APIDataReturn(chatGptCarRecommendation, matchingTypeEntries);
     }

@@ -8,8 +8,30 @@ public class CarData {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private String guid, vin, price, miles, stock_no, year, make, model, trim, body_type, vehicle_type, drivetrain;
-    private String transmission, fuel_type, engine_size, engine_block, seller_name, street, city, state, zip;
+    private String guid, vin, price, miles, year, make, model, trim, drivetrain;
+
+    @Column(name = "stock_no")
+    private String stockNo;
+
+    @Column(name = "body_type")
+    private String bodyType;
+
+    @Column(name = "vehicle_type")
+    private String vehicleType;
+
+    @Column(name = "fuel_type")
+    private String fuelType;
+
+    @Column(name = "engine_size")
+    private String engineSize;
+
+    @Column(name = "engine_block")
+    private String engineBlock;
+
+    @Column(name = "seller_name")
+    private String sellerName;
+
+    private String transmission, street, city, state, zip;
 
     public int getId() {
         return id;
@@ -23,8 +45,8 @@ public class CarData {
         return guid;
     }
 
-    public void setGuid(String id) {
-        this.guid = id;
+    public void setGuid(String guid) {
+        this.guid = guid;
     }
 
     public String getVin() {
@@ -49,14 +71,6 @@ public class CarData {
 
     public void setMiles(String miles) {
         this.miles = miles;
-    }
-
-    public String getStock_no() {
-        return stock_no;
-    }
-
-    public void setStock_no(String stock_no) {
-        this.stock_no = stock_no;
     }
 
     public String getYear() {
@@ -91,22 +105,6 @@ public class CarData {
         this.trim = trim;
     }
 
-    public String getBody_type() {
-        return body_type;
-    }
-
-    public void setBody_type(String body_type) {
-        this.body_type = body_type;
-    }
-
-    public String getVehicle_type() {
-        return vehicle_type;
-    }
-
-    public void setVehicle_type(String vehicle_type) {
-        this.vehicle_type = vehicle_type;
-    }
-
     public String getDrivetrain() {
         return drivetrain;
     }
@@ -115,44 +113,68 @@ public class CarData {
         this.drivetrain = drivetrain;
     }
 
+    public String getStockNo() {
+        return stockNo;
+    }
+
+    public void setStockNo(String stockNo) {
+        this.stockNo = stockNo;
+    }
+
+    public String getBodyType() {
+        return bodyType;
+    }
+
+    public void setBodyType(String bodyType) {
+        this.bodyType = bodyType;
+    }
+
+    public String getVehicleType() {
+        return vehicleType;
+    }
+
+    public void setVehicleType(String vehicleType) {
+        this.vehicleType = vehicleType;
+    }
+
+    public String getFuelType() {
+        return fuelType;
+    }
+
+    public void setFuelType(String fuelType) {
+        this.fuelType = fuelType;
+    }
+
+    public String getEngineSize() {
+        return engineSize;
+    }
+
+    public void setEngineSize(String engineSize) {
+        this.engineSize = engineSize;
+    }
+
+    public String getEngineBlock() {
+        return engineBlock;
+    }
+
+    public void setEngineBlock(String engineBlock) {
+        this.engineBlock = engineBlock;
+    }
+
+    public String getSellerName() {
+        return sellerName;
+    }
+
+    public void setSellerName(String sellerName) {
+        this.sellerName = sellerName;
+    }
+
     public String getTransmission() {
         return transmission;
     }
 
     public void setTransmission(String transmission) {
         this.transmission = transmission;
-    }
-
-    public String getFuel_type() {
-        return fuel_type;
-    }
-
-    public void setFuel_type(String fuel_type) {
-        this.fuel_type = fuel_type;
-    }
-
-    public String getEngine_size() {
-        return engine_size;
-    }
-
-    public void setEngine_size(String engine_size) {
-        this.engine_size = engine_size;
-    }
-
-    public String getEngine_block() {
-        return engine_block;
-    }
-
-    public void setEngine_block(String engine_block) {
-        this.engine_block = engine_block;
-    }
-
-    public String getSeller_name() {
-        return seller_name;
-    }
-
-    public void setSeller_name(String seller_name) {
-        this.seller_name = seller_name;
     }
 
     public String getStreet() {
