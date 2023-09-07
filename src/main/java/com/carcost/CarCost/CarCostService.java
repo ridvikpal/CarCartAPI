@@ -16,24 +16,19 @@ public class CarCostService {
         this.carCostRepository = carCostRepository;
     }
 
-
-    public List<String> returnAllModels(String _make) {
-        return List.of(ChatGPTConnection.getMakeInfo(_make));
+    public APIDataReturn returnAllModels(String _make) {
+        String chatGptMakeInfo = ChatGPTConnection.getMakeInfo(_make);
+        List<CarData> matchingMakeEntries = carCostRepository.findAllByMakeContaining(_make);
+        return new APIDataReturn(chatGptMakeInfo, matchingMakeEntries);
     }
 
-    public List<String> returnModelListings(String _make, String _model) {
-        return List.of(ChatGPTConnection.getModelInfo(_make, _model));
+    public APIDataReturn returnModelListings(String _make, String _model) {
+        String chatGptModelInfo = ChatGPTConnection.getModelInfo(_make, _model);
+        List<CarData> matchingModelEntries = carCostRepository.findAllByMakeContainingAndModelContaining(_make, _model);
+        return new APIDataReturn(chatGptModelInfo, matchingModelEntries);
     }
 
     public List<String> returnCarRecommendations(String _type, String _make) {
         return List.of(ChatGPTConnection.getCarRecommendation(_type, _make));
     }
-
-    public List<CarData> returnMakeListings(String _make) {
-        return carCostRepository.findAllByMake(_make);
-    }
-
-//    public List<String> returnDatabaseEntries(){
-//        carCostRepository.
-//    }
 }

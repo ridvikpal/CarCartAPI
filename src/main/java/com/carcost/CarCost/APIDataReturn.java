@@ -1,24 +1,28 @@
 package com.carcost.CarCost;
 
-import org.springframework.stereotype.Component;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import java.util.List;
 
 /* THIS CLASS HOLDS THE DATA RETURNED BY THE API */
 // Really it just holds both a recommendation by ChatGPT and then a list of database listings matching
 // the user requests
-@Component
 public class APIDataReturn {
-    private String ChatGPTInfo;
+    private String chatGptInfo;
 
     private List<CarData> databaseListings;
 
-    public String getChatGPTInfo() {
-        return ChatGPTInfo;
+    public APIDataReturn(String chatGptInfo, List<CarData> databaseListings) {
+        this.chatGptInfo = chatGptInfo;
+        this.databaseListings = databaseListings;
     }
 
-    public void setChatGPTInfo(String chatGPTInfo) {
-        ChatGPTInfo = chatGPTInfo;
+    public String getChatGptInfo() {
+        return chatGptInfo;
+    }
+
+    public void setChatGptInfo(String chatGptInfo) {
+        this.chatGptInfo = chatGptInfo;
     }
 
     public List<CarData> getDatabaseListings() {

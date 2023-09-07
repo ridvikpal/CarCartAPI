@@ -19,22 +19,18 @@ public class CarCostController {
     }
 
     @GetMapping(path = "/search_make")
-    public List<String> getAllModels(@RequestParam String make){
+    public APIDataReturn getAllModels(@RequestParam String make){
         return carCostService.returnAllModels(make);
     }
 
     @GetMapping(path = "/search_model")
-    public List<String> getModelListings(@RequestParam String make, @RequestParam String model){
+    public APIDataReturn getModelListings(@RequestParam String make, @RequestParam String model){
         return carCostService.returnModelListings(make, model);
     }
 
+    /* STILL IN DEVELOPMENT */
     @GetMapping(path = "/recommendation")
     public List<String> getRecommendation(@RequestParam String type, @RequestParam(required = false) String make){
         return carCostService.returnCarRecommendations(type, make);
-    }
-
-    @GetMapping(path = "/database")
-    public List<CarData> getMakeListings(@RequestParam String make){
-        return carCostService.returnMakeListings(make);
     }
 }

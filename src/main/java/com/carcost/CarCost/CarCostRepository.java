@@ -9,7 +9,7 @@ import java.util.Optional;
 @Repository
 public interface CarCostRepository extends JpaRepository<CarData, Integer> {
 
-    List<CarData> findAllByMake(String make);
+    List<CarData> findAllByMakeContaining(String make);
 
-    List<CarData> findAllByMakeAndModel(String make, String model);
+    List<CarData> findAllByMakeContainingAndModelContaining(String make, String model);
 }
