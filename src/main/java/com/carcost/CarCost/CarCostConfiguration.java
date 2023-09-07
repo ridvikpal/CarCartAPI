@@ -1,4 +1,4 @@
-package com.carcost.CarCost.config;
+package com.carcost.CarCost;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

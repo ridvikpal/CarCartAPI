@@ -1,4 +1,4 @@
-package com.carcost.CarCost.model.chatgpt;
+package com.carcost.CarCost.chatgpt;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,8 +44,8 @@ public class ChatGPTConnection {
 
     public static String getMakeInfo(String _make){
         return getChatGPTResponse(
-                "gpt-3.5-turbo",
-                "Provide a short description of the car manufacturer " + _make + ". Describe the " +
+            "gpt-3.5-turbo",
+            "Provide a short description of the car manufacturer " + _make + ". Describe the " +
                         "manufacturer based on reviews, reliability, maintenance, cost of operation, and user experience. " +
                         " Then describe up to 5 cars in list format provided by the car manufacturer " + _make +
                         " in the following format: \n\n " +
@@ -54,26 +54,22 @@ public class ChatGPTConnection {
                         "Type: [Output] \n\n " +
                         "Features: [Output] \n\n" +
                         "MSRP: [Output]",
-                0.7
+        0.7
         );
     }
 
-    public static String getModelInfo(String _make, String _makeModel, Integer _year){
+    public static String getModelInfo(String _make, String _makeModel){
         if (_make == null || _make.trim().isEmpty() || _makeModel == null || _makeModel.trim().isEmpty()){
             return "";
         }
 
-        if (_year == null || _year < 1950 && _year > 2021){
-            return getChatGPTResponse(
-                    "gpt-3.5-turbo",
-                    "Give me information about the following car: " + _make + " " +  _makeModel,
-                    0.7
-            );
-        }
-
         return getChatGPTResponse(
                 "gpt-3.5-turbo",
-                "Give me information about the following car: " + _make + " " +  _makeModel + " " + _year,
+                "Provide a short description about the following car, " + _make + " " +  _makeModel +
+                    " with respect to reviews, reliability, maintenance, cost of operation, user experience, " +
+                    "and common problems with used models of this car. Then provide some information about it's " +
+                    "features. Finally, recommend a good used price and mileage for the " + _make + " " +
+                    _makeModel + " to look for.",
                 0.7
         );
     }

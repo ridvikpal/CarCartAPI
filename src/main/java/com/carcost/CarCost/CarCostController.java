@@ -1,6 +1,5 @@
-package com.carcost.CarCost.controller;
+package com.carcost.CarCost;
 
-import com.carcost.CarCost.model.CarCostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,13 +24,17 @@ public class CarCostController {
     }
 
     @GetMapping(path = "/search_model")
-    public List<String> getModelListings(@RequestParam String make, @RequestParam String model,
-                                         @RequestParam(required = false) Integer year){
-        return carCostService.returnModelListings(make, model, year);
+    public List<String> getModelListings(@RequestParam String make, @RequestParam String model){
+        return carCostService.returnModelListings(make, model);
     }
 
     @GetMapping(path = "/recommendation")
     public List<String> getRecommendation(@RequestParam String type, @RequestParam(required = false) String make){
         return carCostService.returnCarRecommendations(type, make);
     }
+
+//    @GetMapping(path = "/database")
+//    public List<String> getDatabaseEntries(){
+//
+//    }
 }

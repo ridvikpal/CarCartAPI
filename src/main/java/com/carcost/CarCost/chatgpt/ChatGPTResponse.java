@@ -1,4 +1,4 @@
-package com.carcost.CarCost.model.chatgpt;
+package com.carcost.CarCost.chatgpt;
 
 import org.springframework.stereotype.Component;
 
