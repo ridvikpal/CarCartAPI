@@ -29,6 +29,10 @@ public class CarCostService {
         return List.of(ChatGPTConnection.getCarRecommendation(_type, _make));
     }
 
+    public List<CarData> returnMakeListings(String _make) {
+        return carCostRepository.findAllByMake(_make);
+    }
+
 //    public List<String> returnDatabaseEntries(){
 //        carCostRepository.
 //    }

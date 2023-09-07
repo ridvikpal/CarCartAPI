@@ -33,8 +33,8 @@ public class CarCostController {
         return carCostService.returnCarRecommendations(type, make);
     }
 
-//    @GetMapping(path = "/database")
-//    public List<String> getDatabaseEntries(){
-//
-//    }
+    @GetMapping(path = "/database")
+    public List<CarData> getMakeListings(@RequestParam String make){
+        return carCostService.returnMakeListings(make);
+    }
 }

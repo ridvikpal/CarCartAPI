@@ -3,12 +3,13 @@ package com.carcost.CarCost;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface CarCostRepository extends JpaRepository<CarData, Integer> {
 
-    Optional<CarData> findCarDataByMake(String make);
+    List<CarData> findAllByMake(String make);
 
-    Optional<CarData> findCarDataByModel(String model);
+    List<CarData> findAllByMakeAndModel(String make, String model);
 }
