@@ -78,13 +78,19 @@ public class ChatGPTConnection {
         if (_make == null || _make.trim().isEmpty()){
             return getChatGPTResponse(
                     "gpt-3.5-turbo",
-                    "Recommend me a " + _type + "based on reviews",
+                    "Describe me the features of cars of the type " + _type + ". Then, recommend me " +
+                            "up to 5 good cars of the type " + _type + " based on based on Car and Driver Reviews. " +
+                            "Make sure to include information about features of the cars, reliability, maintenance," +
+                            "cost of operation, price, user experience and common problems associated with the cars.",
                     0.7
             );
         }
         return getChatGPTResponse(
                 "gpt-3.5-turbo",
-                "Recommend me a " + _make + " " + _type + "based on reviews",
+                "Describe me the features of cars of the type " + _type + ". Then, recommend me " +
+                        "cars of the type " + _type + " from " + _make + " based on based on Car and Driver Reviews. " +
+                        "Make sure to include information about features of the cars, reliability, maintenance," +
+                        "cost of operation, price, user experience and common problems associated with the cars.",
                 0.7
         );
     }

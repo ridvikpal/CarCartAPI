@@ -16,7 +16,7 @@ public class CarCostService {
         this.carCostRepository = carCostRepository;
     }
 
-    public APIDataReturn returnAllModels(String _make, boolean _low_price) {
+    public APIDataReturn returnMakeListings(String _make, boolean _low_price) {
         String chatGptMakeInfo = ChatGPTConnection.getMakeInfo(_make);
         List<CarData> matchingMakeEntries;
         if (_low_price){
@@ -27,13 +27,26 @@ public class CarCostService {
         return new APIDataReturn(chatGptMakeInfo, matchingMakeEntries);
     }
 
-    public APIDataReturn returnModelListings(String _make, String _model) {
+    public APIDataReturn returnModelListings(String _make, String _model, boolean _low_price) {
         String chatGptModelInfo = ChatGPTConnection.getModelInfo(_make, _model);
-        List<CarData> matchingModelEntries = carCostRepository.findAllByMakeContainingAndModelContaining(_make, _model);
+        List<CarData> matchingModelEntries;
+        if (_low_price){
+            matchingModelEntries =
+                    carCostRepository.findAllByMakeContainingAndModelContainingOrderByPriceAsc(_make, _model);
+        }else{
+            matchingModelEntries = carCostRepository.findAllByMakeContainingAndModelContaining(_make, _model);
+        }
         return new APIDataReturn(chatGptModelInfo, matchingModelEntries);
     }
 
-    public List<String> returnCarRecommendations(String _type, String _make) {
-        return List.of(ChatGPTConnection.getCarRecommendation(_type, _make));
+    public APIDataReturn returnCarRecommendations(String _type, String _make) {
+        String chatGptCarRecommendation = ChatGPTConnection.getCarRecommendation(_type, _make);
+        List<CarData> matchingTypeEntries;
+        if (_make == null || _make.trim().isEmpty()){
+            matchingTypeEntries = carCostRepository.findAllByBody_typeContaining(_type);
+        }else{
+            matchingTypeEntries = carCostRepository.findAllByBody_typeContainingAndMakeContaining(_type, _make);
+        }
+        return new APIDataReturn(chatGptCarRecommendation, matchingTypeEntries);
     }
 }
