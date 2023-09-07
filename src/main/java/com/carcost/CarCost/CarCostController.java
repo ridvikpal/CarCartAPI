@@ -19,8 +19,8 @@ public class CarCostController {
     }
 
     @GetMapping(path = "/search_make")
-    public APIDataReturn getAllModels(@RequestParam String make){
-        return carCostService.returnAllModels(make);
+    public APIDataReturn getAllModels(@RequestParam String make, @RequestParam(required = false) boolean low_price){
+        return carCostService.returnAllModels(make, low_price);
     }
 
     @GetMapping(path = "/search_model")

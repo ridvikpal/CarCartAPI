@@ -16,9 +16,14 @@ public class CarCostService {
         this.carCostRepository = carCostRepository;
     }
 
-    public APIDataReturn returnAllModels(String _make) {
+    public APIDataReturn returnAllModels(String _make, boolean _low_price) {
         String chatGptMakeInfo = ChatGPTConnection.getMakeInfo(_make);
-        List<CarData> matchingMakeEntries = carCostRepository.findAllByMakeContaining(_make);
+        List<CarData> matchingMakeEntries;
+        if (_low_price){
+            matchingMakeEntries = carCostRepository.findAllByMakeContainingOrderByPriceAsc(_make);
+        }else{
+            matchingMakeEntries = carCostRepository.findAllByMakeContaining(_make);
+        }
         return new APIDataReturn(chatGptMakeInfo, matchingMakeEntries);
     }
 
