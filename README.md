@@ -1,20 +1,18 @@
 # CarCostAPI
 
 <!-- TOC -->
-
 * [CarCostAPI](#carcostapi)
-    * [Introduction](#introduction)
-    * [Goals](#goals)
-    * [Maven Dependencies](#maven-dependencies)
-    * [Configuration for `application.properties` File](#configuration-for-applicationproperties-file)
-    * [Design](#design)
-    * [Features](#features)
-        * [OpenAI ChatGPT Integration](#openai-chatgpt-integration)
-        * [Find a Specific Make](#find-a-specific-make)
-        * [Return a Specific Make and Model](#return-a-specific-make-and-model)
-        * [Recommend a Specific Type and Model](#recommend-a-specific-type-and-model)
-    * [Future Goals](#future-goals)
-
+  * [Introduction](#introduction)
+  * [Goals](#goals)
+  * [Maven Dependencies](#maven-dependencies)
+  * [Configuration for `application.properties` File](#configuration-for-applicationproperties-file)
+  * [Design](#design)
+  * [Features](#features)
+    * [OpenAI ChatGPT Integration](#openai-chatgpt-integration)
+    * [Find a Specific Make](#find-a-specific-make)
+    * [Return a Specific Make and Model](#return-a-specific-make-and-model)
+    * [Recommend a Specific Type and Model](#recommend-a-specific-type-and-model)
+  * [Features to Implement in the Future](#features-to-implement-in-the-future)
 <!-- TOC -->
 
 ## Introduction
@@ -138,12 +136,17 @@ URL: https://localhost:8080/api/v1/search_model?make=Ferrari&model=458&low_price
 
 You can easily find used car listings and get a recommendation for a specific type of car using the URL
 extension: [api/v1/recommendation?type=car_type](api/v1/recommendation?type=car_type). You must provide the`String`
-parameter `type`. For example, assuming you want to find SUVs to buy, you can go to the url: https://localhost:8080/api/v1/recommendation?type=SUV. This would return the following information:
+parameter `type`. For example, assuming you want to find SUVs to buy, you can go to the
+url: https://localhost:8080/api/v1/recommendation?type=SUV. This would return the following information:
 
 ```json
 
 ```
 
-You can also find a recommendation for a specific type of car from a specific make as well via the `String` parameter `make`. For example, to find listings for SUVs from Mercedes-Benz, you can go to the URL: https://localhost:8080/api/v1/recommendation?type=SUV&make=Mercedes-Benz. 
+You can also find a recommendation for a specific type of car from a specific make as well via the `String`
+parameter `make`. For example, to find listings for SUVs from Mercedes-Benz, you can go to the
+URL: https://localhost:8080/api/v1/recommendation?type=SUV&make=Mercedes-Benz.
 
-## Future Goals
+## Features to Implement in the Future
+
+There are various features I would like to implement 
