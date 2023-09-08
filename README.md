@@ -34,6 +34,22 @@ my first time using its API! Unfortunately, the ChatGPT API was not free, but it
 
 CarCost utilizes the following maven dependencies:
 
+<div align="center">
+
+| Dependency                     | Description                                                  |
+|--------------------------------|--------------------------------------------------------------|
+| `spring-boot-starter-data-jpa` | Used to connect to the MySQL database                        |
+| `spring-boot-starter-web`      | Used to provide a Tomcat server and the Spring MVC Framework |
+| `spring-boot-starter-webflux`  | Used to consume the ChatGPT REST API                         |
+| `mysql-connector-j`            | JDBC MySQL driver, works with Spring JPA                     |
+
+</div>
+
+Note I used Spring WebFlux, which is part of the Spring Reactive Web for REST API calls. Therefore, I used `WebClient()`
+instead of `RestTemplate()`. This is because `WebClient()` is the newer and preferred way to consume REST APIs in
+Spring. However, many programs have not moved onto `WebClient()` and are still stuck with the older
+deprecated `RestTemplate()`, which will not be supported in future Spring releases.
+
 ## Design
 
 ## Features
