@@ -7,7 +7,7 @@
   * [Maven Dependencies](#maven-dependencies)
   * [Design](#design)
   * [Features](#features)
-    * [ChatGPT Integration](#chatgpt-integration)
+    * [OpenAI ChatGPT Integration](#openai-chatgpt-integration)
     * [Find a Specific Make](#find-a-specific-make)
     * [Return a Specific Make and Model](#return-a-specific-make-and-model)
     * [Recommend a Specific Type and Model](#recommend-a-specific-type-and-model)
@@ -54,7 +54,7 @@ deprecated `RestTemplate()`, which will not be supported in future Spring releas
 
 ## Features
 
-### ChatGPT Integration
+### OpenAI ChatGPT Integration
 
 ### Find a Specific Make
 
