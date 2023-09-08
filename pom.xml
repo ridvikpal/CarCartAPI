@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.carcost.</groupId>
-	<artifactId>CarCost</artifactId>
+	<artifactId>CarCostAPI</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>CarCost</name>
+	<name>CarCostAPI</name>
 	<description>An API that allows you to get used car data from a MySQL database, with additional information provided by ChatGPT.</description>
 	<properties>
 		<java.version>17</java.version>

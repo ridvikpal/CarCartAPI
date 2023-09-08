@@ -1,4 +1,4 @@
-package com.carcost.CarCost.chatgpt;
+package com.carcost.CarCostAPI.chatgpt;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

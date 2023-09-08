@@ -1,4 +1,4 @@
-package com.carcost.CarCost;
+package com.carcost.CarCostAPI;
 
 import jakarta.persistence.*;
 

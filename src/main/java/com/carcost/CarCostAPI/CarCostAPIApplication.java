@@ -1,13 +1,13 @@
-package com.carcost.CarCost;
+package com.carcost.CarCostAPI;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CarCostApplication {
+public class CarCostAPIApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CarCostApplication.class, args);
+		SpringApplication.run(CarCostAPIApplication.class, args);
 	}
 
 }

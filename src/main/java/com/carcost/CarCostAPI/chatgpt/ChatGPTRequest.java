@@ -1,7 +1,4 @@
-package com.carcost.CarCost.chatgpt;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+package com.carcost.CarCostAPI.chatgpt;
 
 import java.util.ArrayList;
 

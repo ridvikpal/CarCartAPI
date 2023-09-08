@@ -1,4 +1,4 @@
-package com.carcost.CarCost;
+package com.carcost.CarCostAPI;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CarCostRepository extends JpaRepository<CarData, Integer> {
+public interface CarCostAPIRepository extends JpaRepository<CarData, Integer> {
 
     List<CarData> findAllByMakeContaining(String make);
 

@@ -1,28 +1,28 @@
-package com.carcost.CarCost;
+package com.carcost.CarCostAPI;
 
-import com.carcost.CarCost.chatgpt.ChatGPTConnection;
+import com.carcost.CarCostAPI.chatgpt.ChatGPTConnection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class CarCostService {
+public class CarCostAPIService {
 
-    private final CarCostRepository carCostRepository;
+    private final CarCostAPIRepository carCostAPIRepository;
 
     @Autowired
-    public CarCostService(CarCostRepository carCostRepository) {
-        this.carCostRepository = carCostRepository;
+    public CarCostAPIService(CarCostAPIRepository carCostAPIRepository) {
+        this.carCostAPIRepository = carCostAPIRepository;
     }
 
     public APIDataReturn returnMakeListings(String _make, boolean _low_price) {
         String chatGptMakeInfo = ChatGPTConnection.getMakeInfo(_make);
         List<CarData> matchingMakeEntries;
         if (_low_price){
-            matchingMakeEntries = carCostRepository.findAllByMakeContainingOrderByPriceAsc(_make);
+            matchingMakeEntries = carCostAPIRepository.findAllByMakeContainingOrderByPriceAsc(_make);
         }else{
-            matchingMakeEntries = carCostRepository.findAllByMakeContaining(_make);
+            matchingMakeEntries = carCostAPIRepository.findAllByMakeContaining(_make);
         }
         return new APIDataReturn(chatGptMakeInfo, matchingMakeEntries);
     }
@@ -32,9 +32,9 @@ public class CarCostService {
         List<CarData> matchingModelEntries;
         if (_low_price){
             matchingModelEntries =
-                    carCostRepository.findAllByMakeContainingAndModelContainingOrderByPriceAsc(_make, _model);
+                    carCostAPIRepository.findAllByMakeContainingAndModelContainingOrderByPriceAsc(_make, _model);
         }else{
-            matchingModelEntries = carCostRepository.findAllByMakeContainingAndModelContaining(_make, _model);
+            matchingModelEntries = carCostAPIRepository.findAllByMakeContainingAndModelContaining(_make, _model);
         }
         return new APIDataReturn(chatGptModelInfo, matchingModelEntries);
     }
@@ -43,9 +43,9 @@ public class CarCostService {
         String chatGptCarRecommendation = ChatGPTConnection.getCarRecommendation(_type, _make);
         List<CarData> matchingTypeEntries;
         if (_make == null || _make.trim().isEmpty()){
-            matchingTypeEntries = carCostRepository.findAllByBodyTypeContaining(_type);
+            matchingTypeEntries = carCostAPIRepository.findAllByBodyTypeContaining(_type);
         }else{
-            matchingTypeEntries = carCostRepository.findAllByBodyTypeContainingAndMakeContaining(_type, _make);
+            matchingTypeEntries = carCostAPIRepository.findAllByBodyTypeContainingAndMakeContaining(_type, _make);
         }
         return new APIDataReturn(chatGptCarRecommendation, matchingTypeEntries);
     }
