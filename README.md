@@ -1,16 +1,18 @@
 # CarCostAPI
 
 <!-- TOC -->
+
 * [CarCostAPI](#carcostapi)
-  * [Introduction](#introduction)
-  * [Goals](#goals)
-  * [Maven Dependencies](#maven-dependencies)
-  * [Design](#design)
-  * [Features](#features)
-    * [OpenAI ChatGPT Integration](#openai-chatgpt-integration)
-    * [Find a Specific Make](#find-a-specific-make)
-    * [Return a Specific Make and Model](#return-a-specific-make-and-model)
-    * [Recommend a Specific Type and Model](#recommend-a-specific-type-and-model)
+    * [Introduction](#introduction)
+    * [Goals](#goals)
+    * [Maven Dependencies](#maven-dependencies)
+    * [Design](#design)
+    * [Features](#features)
+        * [OpenAI ChatGPT Integration](#openai-chatgpt-integration)
+        * [Find a Specific Make](#find-a-specific-make)
+        * [Return a Specific Make and Model](#return-a-specific-make-and-model)
+        * [Recommend a Specific Type and Model](#recommend-a-specific-type-and-model)
+
 <!-- TOC -->
 
 ## Introduction
@@ -50,7 +52,30 @@ instead of `RestTemplate()`. This is because `WebClient()` is the newer and pref
 Spring. However, many programs have not moved onto `WebClient()` and are still stuck with the older
 deprecated `RestTemplate()`, which will not be supported in future Spring releases.
 
+## Configuration for `application.properties` File
+
+A sample configuration for an `application.properties` file to run this program is:
+
+```properties
+# OpenAI key
+openai.api.key=your_open_AI_key
+# Configuration for MySQL data access
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.open-in-view=false
+spring.datasource.url=jdbc:mysql://${MYSQL_HOST:localhost}:3306/your_database_name
+spring.datasource.username=your_sql_username
+spring.datasource.password=your_sql_password
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+```
+
+You must provide your own OpenAI key and MySQL database. I have tested the API with a MySQL database preloaded with a
+table containing used car data
+from [here](https://www.kaggle.com/datasets/rupeshraundal/marketcheck-automotive-data-us-canada). However, the API will work with any database with car data, albeit with a bit of modification (changing column names in the Spring `@Entity` class). Ideally, the database would be large (the one I used has 7 million entries) and should have aggregated across lots of different websites.
+
 ## Design
+
+The API is designed with the Spring MVC pattern to align with industry standard REST principles.
 
 ## Features
 
