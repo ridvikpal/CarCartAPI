@@ -6,8 +6,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.CompletableFuture;
+
 @RestController
-@RequestMapping(path = "api/v1")
+@RequestMapping(path = "carcostapi")
 public class CarCostAPIController {
     private final CarCostAPIService carCostAPIService;
 
@@ -17,12 +19,12 @@ public class CarCostAPIController {
     }
 
     @GetMapping(path = "/search_make")
-    public APIDataReturn getMakeListings(@RequestParam String make, @RequestParam(required = false) boolean low_price){
+    public CompletableFuture<APIDataReturn> getMakeListings(@RequestParam String make, @RequestParam(required = false) boolean low_price){
         return carCostAPIService.returnMakeListings(make, low_price);
     }
 
     @GetMapping(path = "/search_model")
-    public APIDataReturn getModelListings(
+    public CompletableFuture<APIDataReturn> getModelListings(
             @RequestParam String make,
             @RequestParam String model,
             @RequestParam(required = false) boolean low_price
@@ -32,7 +34,7 @@ public class CarCostAPIController {
 
     /* STILL IN DEVELOPMENT */
     @GetMapping(path = "/recommendation")
-    public APIDataReturn getRecommendation(@RequestParam String type, @RequestParam(required = false) String make){
+    public CompletableFuture<APIDataReturn> getRecommendation(@RequestParam String type, @RequestParam(required = false) String make){
         return carCostAPIService.returnCarRecommendations(type, make);
     }
 }
