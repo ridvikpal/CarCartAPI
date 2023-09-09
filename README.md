@@ -1,26 +1,28 @@
 # CarCostAPI
 
 <!-- TOC -->
+
 * [CarCostAPI](#carcostapi)
-  * [Introduction](#introduction)
-  * [Goals](#goals)
-  * [Maven Dependencies](#maven-dependencies)
-  * [Configuration for `application.properties` File](#configuration-for-applicationproperties-file)
-  * [Design](#design)
-  * [Features](#features)
-    * [OpenAI ChatGPT Integration](#openai-chatgpt-integration)
-      * [Example for Make Search](#example-for-make-search)
-      * [Example for Model Search](#example-for-model-search)
-      * [Example for Car Type Recommendation](#example-for-car-type-recommendation)
-    * [Used Car Listings](#used-car-listings)
-      * [Find a Specific Make](#find-a-specific-make)
-        * [Example](#example)
-      * [Return a Specific Make and Model](#return-a-specific-make-and-model)
-        * [Example](#example-1)
-      * [Recommend a Specific Type and Model](#recommend-a-specific-type-and-model)
-        * [Example](#example-2)
-    * [Example of a Full API Call](#example-of-a-full-api-call)
-  * [Features to Implement in the Future](#features-to-implement-in-the-future)
+    * [Introduction](#introduction)
+    * [Goals](#goals)
+    * [Maven Dependencies](#maven-dependencies)
+    * [Configuration for `application.properties` File](#configuration-for-applicationproperties-file)
+    * [Design](#design)
+    * [Features](#features)
+        * [OpenAI ChatGPT Integration](#openai-chatgpt-integration)
+            * [Example for Make Search](#example-for-make-search)
+            * [Example for Model Search](#example-for-model-search)
+            * [Example for Car Type Recommendation](#example-for-car-type-recommendation)
+        * [Used Car Listings](#used-car-listings)
+            * [Find a Specific Make](#find-a-specific-make)
+                * [Example](#example)
+            * [Return a Specific Make and Model](#return-a-specific-make-and-model)
+                * [Example](#example-1)
+            * [Recommend a Specific Type and Model](#recommend-a-specific-type-and-model)
+                * [Example](#example-2)
+        * [Example of a Full API Call](#example-of-a-full-api-call)
+    * [Features to Implement in the Future](#features-to-implement-in-the-future)
+
 <!-- TOC -->
 
 ## Introduction
@@ -112,8 +114,8 @@ For example, assume you are searching for cars from Ferrari using the following
 URL: http://localhost:8080/api/v1/search_make?make=Ferrari. Then ChatGPT would recommend you:
 
 ```json
-{
-  "chatGptInfo": "Ferrari is an Italian luxury car manufacturer known for its high-performance sports cars and iconic brand image. Reviews of Ferrari vehicles often highlight their exceptional performance, precise handling, and striking design. However, some reviewers also note that Ferrari cars can be expensive to purchase and maintain, making them less practical for everyday use. In terms of reliability, Ferrari models are generally well-built, but their maintenance costs can be high due to the specialized nature of the brand. \n\nUser experience with Ferrari cars is often described as thrilling and exhilarating, with powerful engines and a sense of exclusivity. However, some users may find the firm suspension and limited interior space less comfortable for longer drives. Overall, Ferrari cars are admired for their performance and heritage, but they may not be the most practical choice for everyone.\n\nHere are five cars offered by Ferrari:\n\n1. Name: Ferrari 488 GTB\n   Engine: 3.9-liter V8\n   Type: Coupe\n   Features: Turbocharged, rear-wheel drive, advanced aerodynamics\n   MSRP: Starting at $262,647\n\n2. Name: Ferrari F8 Tributo\n   Engine: 3.9-liter V8\n   Type: Coupe\n   Features: Turbocharged, rear-wheel drive, advanced driver-assistance systems\n   MSRP: Starting at $276,550\n\n3. Name: Ferrari Portofino\n   Engine: 3.9-liter V8\n   Type: Convertible\n   Features: Retractable hardtop, rear-wheel drive, luxurious interior\n   MSRP: Starting at $215,000\n\n4. Name: Ferrari Roma\n   Engine: 3.9-liter V8\n   Type: Coupe\n   Features: Sleek design, advanced infotainment system, rear-wheel drive\n   MSRP: Starting at $222,420\n\n5. Name: Ferrari SF90 Stradale\n   Engine: 4.0-liter V8 combined with electric motors\n   Type: Hybrid\n   Features: All-wheel drive, high-performance hybrid powertrain, advanced technology\n   MSRP: Starting at $507,300",
+"chatGptInfo": "Ferrari is an Italian luxury car manufacturer known for its high-performance sports cars and iconic brand image. Reviews of Ferrari vehicles often highlight their exceptional performance, precise handling, and striking design. However, some reviewers also note that Ferrari cars can be expensive to purchase and maintain, making them less practical for everyday use. In terms of reliability, Ferrari models are generally well-built, but their maintenance costs can be high due to the specialized nature of the brand. \n\nUser experience with Ferrari cars is often described as thrilling and exhilarating, with powerful engines and a sense of exclusivity. However, some users may find the firm suspension and limited interior space less comfortable for longer drives. Overall, Ferrari cars are admired for their performance and heritage, but they may not be the most practical choice for everyone.\n\nHere are five cars offered by Ferrari:\n\n1. Name: Ferrari 488 GTB\n   Engine: 3.9-liter V8\n   Type: Coupe\n   Features: Turbocharged, rear-wheel drive, advanced aerodynamics\n   MSRP: Starting at $262,647\n\n2. Name: Ferrari F8 Tributo\n   Engine: 3.9-liter V8\n   Type: Coupe\n   Features: Turbocharged, rear-wheel drive, advanced driver-assistance systems\n   MSRP: Starting at $276,550\n\n3. Name: Ferrari Portofino\n   Engine: 3.9-liter V8\n   Type: Convertible\n   Features: Retractable hardtop, rear-wheel drive, luxurious interior\n   MSRP: Starting at $215,000\n\n4. Name: Ferrari Roma\n   Engine: 3.9-liter V8\n   Type: Coupe\n   Features: Sleek design, advanced infotainment system, rear-wheel drive\n   MSRP: Starting at $222,420\n\n5. Name: Ferrari SF90 Stradale\n   Engine: 4.0-liter V8 combined with electric motors\n   Type: Hybrid\n   Features: All-wheel drive, high-performance hybrid powertrain, advanced technology\n   MSRP: Starting at $507,300",
+...
 ```
 
 #### Example for Model Search
@@ -123,9 +125,8 @@ using the following URL: http://localhost:8080/api/v1/search_model?make=Ferrari&
 Then, ChatGPT would recommend you:
 
 ```json
-{
-  "chatGptInfo": "The Ferrari 458 is a high-performance sports car that was produced by the Italian automaker, Ferrari, from 2009 to 2015. It received generally positive reviews from automotive enthusiasts and experts, who praised its exhilarating performance, precise handling, and stunning design. The car is often regarded as one of Ferrari's all-time greats.\n\nIn terms of reliability, the Ferrari 458 has proven to be a fairly solid and dependable car. However, being a high-performance vehicle, regular maintenance is crucial to keep it in top condition. Routine services, such as oil changes and brake replacements, can be expensive due to the specialized nature of the car and the need for genuine Ferrari parts.\n\nThe cost of operation for a Ferrari 458 can be quite high. It demands premium fuel, and insurance and maintenance costs can be substantial. Additionally, the car's fuel efficiency is not particularly impressive, so it may not be the most economical choice for daily commuting.\n\nUser experience with the Ferrari 458 is generally exceptional. The car offers a thrilling driving experience, with its powerful engine, lightning-fast acceleration, and responsive steering. The interior is luxurious and well-crafted, providing comfort and a sense of exclusivity.\n\nCommon problems with used models of the Ferrari 458 include issues with the dual-clutch transmission, which may experience jerky shifts or failure over time. Additionally, some owners have reported electrical glitches and minor cosmetic flaws. It is crucial to have a thorough pre-purchase inspection and to choose a reputable seller when considering a used Ferrari 458.\n\nThe Ferrari 458 comes packed with impressive features, including a naturally aspirated V8 engine, aerodynamic bodywork, advanced traction control systems, carbon ceramic brakes, and a sophisticated suspension setup. It also offers a range of customizable options for buyers to personalize their cars.\n\nWhen looking for a used Ferrari 458, a good price range would be around $150,000 to $200,000, depending on the model year, condition, mileage, and optional features. As for mileage, it is advisable to look for a car with less than 20,000 miles on the odometer, as higher mileage can potentially indicate more wear and tear or a harder life for the vehicle. However, it is important to consider the overall condition and maintenance history of the car rather than focusing solely on mileage.",
-  ...
+"chatGptInfo": "The Ferrari 458 is a high-performance sports car that was produced by the Italian automaker, Ferrari, from 2009 to 2015. It received generally positive reviews from automotive enthusiasts and experts, who praised its exhilarating performance, precise handling, and stunning design. The car is often regarded as one of Ferrari's all-time greats.\n\nIn terms of reliability, the Ferrari 458 has proven to be a fairly solid and dependable car. However, being a high-performance vehicle, regular maintenance is crucial to keep it in top condition. Routine services, such as oil changes and brake replacements, can be expensive due to the specialized nature of the car and the need for genuine Ferrari parts.\n\nThe cost of operation for a Ferrari 458 can be quite high. It demands premium fuel, and insurance and maintenance costs can be substantial. Additionally, the car's fuel efficiency is not particularly impressive, so it may not be the most economical choice for daily commuting.\n\nUser experience with the Ferrari 458 is generally exceptional. The car offers a thrilling driving experience, with its powerful engine, lightning-fast acceleration, and responsive steering. The interior is luxurious and well-crafted, providing comfort and a sense of exclusivity.\n\nCommon problems with used models of the Ferrari 458 include issues with the dual-clutch transmission, which may experience jerky shifts or failure over time. Additionally, some owners have reported electrical glitches and minor cosmetic flaws. It is crucial to have a thorough pre-purchase inspection and to choose a reputable seller when considering a used Ferrari 458.\n\nThe Ferrari 458 comes packed with impressive features, including a naturally aspirated V8 engine, aerodynamic bodywork, advanced traction control systems, carbon ceramic brakes, and a sophisticated suspension setup. It also offers a range of customizable options for buyers to personalize their cars.\n\nWhen looking for a used Ferrari 458, a good price range would be around $150,000 to $200,000, depending on the model year, condition, mileage, and optional features. As for mileage, it is advisable to look for a car with less than 20,000 miles on the odometer, as higher mileage can potentially indicate more wear and tear or a harder life for the vehicle. However, it is important to consider the overall condition and maintenance history of the car rather than focusing solely on mileage.",
+...
 ```
 
 #### Example for Car Type Recommendation
@@ -134,9 +135,8 @@ For example, assume you are looking for a new SUV from Mercedes and use the foll
 http://localhost:8080/api/v1/recommendation?type=SUV&make=Mercedes-Benz. Then, ChatGPT will recommend you:
 
 ```json
-{
-  "chatGptInfo": "SUVs, or Sports Utility Vehicles, are a type of vehicle that combines elements of both passenger cars and off-road vehicles. They typically feature a high ground clearance, a spacious interior, and the ability to handle various terrains. Here are some common features found in SUVs:\n\n1. Size and Space: SUVs offer ample seating capacity for passengers and usually have a larger cargo area compared to sedans or hatchbacks.\n\n2. All-Wheel Drive (AWD) or Four-Wheel Drive (4WD): Many SUVs come with AWD or 4WD systems, enhancing their off-road capabilities and providing better traction on slippery or uneven surfaces.\n\n3. Safety Features: SUVs often include advanced safety features like stability control, traction control, anti-lock braking systems, multiple airbags, blind-spot monitoring, lane-keeping assist, and collision avoidance systems.\n\n4. Technology and Connectivity: Modern SUVs come equipped with features like touchscreen infotainment systems, Bluetooth connectivity, smartphone integration, USB ports, advanced navigation systems, and premium audio systems.\n\n5. Comfort and Luxury: SUVs from luxury brands offer plush interiors, high-quality materials, luxurious seating options, climate control systems, panoramic sunroofs, and advanced driver-assist features.\n\n6. Towing Capacity: Many SUVs are designed with towing capabilities, allowing them to haul trailers or boats.\n\nNow, based on Car and Driver reviews, here are some recommended SUV models from Mercedes-Benz:\n\n1. Mercedes-Benz GLE: The GLE offers a comfortable and luxurious cabin, advanced safety features, a powerful engine lineup, and excellent off-road capabilities. It provides a smooth ride and comes with various tech features like a large infotainment display, smartphone integration, and a host of driver-assist systems.\n\n2. Mercedes-Benz GLC: The GLC combines style, comfort, and performance. It features a well-appointed interior, a user-friendly infotainment system, a smooth ride, and a range of engine options. Additionally, it offers good fuel economy and advanced safety features.\n\n3. Mercedes-Benz GLS: The GLS is a large luxury SUV that provides ample seating and cargo space. It offers a comfortable ride, powerful engine choices, advanced technology features, and a refined interior. The GLS also provides excellent towing capacity and a plethora of safety features.\n\nIn terms of reliability, Mercedes-Benz SUVs generally have a good reputation, but like any vehicle, they may encounter some common problems. These can include electrical issues, transmission problems, and occasional brake or suspension concerns. However, regular maintenance and servicing can help mitigate these problems.\n\nMaintenance and cost of operation for Mercedes-Benz SUVs can be higher compared to non-luxury brands due to the premium nature of the vehicles. Genuine parts and specialized servicing can contribute to higher maintenance costs.\n\nWhen it comes to pricing, Mercedes-Benz SUVs tend to be on the higher end of the spectrum due to their luxury status. Prices can vary depending on the specific model, trim level, optional features, and region.\n\nUser experience with Mercedes-Benz SUVs is generally positive, with drivers appreciating the comfort, performance, and advanced features. However, personal preferences and experiences can vary.\n\nUltimately, it is recommended to visit a Mercedes-Benz dealership, consult the official website, or refer to trusted automotive sources for the most accurate and up-to-date information on features, pricing, reliability, and common problems associated with specific Mercedes-Benz SUV models.",
-  ...
+"chatGptInfo": "SUVs, or Sports Utility Vehicles, are a type of vehicle that combines elements of both passenger cars and off-road vehicles. They typically feature a high ground clearance, a spacious interior, and the ability to handle various terrains. Here are some common features found in SUVs:\n\n1. Size and Space: SUVs offer ample seating capacity for passengers and usually have a larger cargo area compared to sedans or hatchbacks.\n\n2. All-Wheel Drive (AWD) or Four-Wheel Drive (4WD): Many SUVs come with AWD or 4WD systems, enhancing their off-road capabilities and providing better traction on slippery or uneven surfaces.\n\n3. Safety Features: SUVs often include advanced safety features like stability control, traction control, anti-lock braking systems, multiple airbags, blind-spot monitoring, lane-keeping assist, and collision avoidance systems.\n\n4. Technology and Connectivity: Modern SUVs come equipped with features like touchscreen infotainment systems, Bluetooth connectivity, smartphone integration, USB ports, advanced navigation systems, and premium audio systems.\n\n5. Comfort and Luxury: SUVs from luxury brands offer plush interiors, high-quality materials, luxurious seating options, climate control systems, panoramic sunroofs, and advanced driver-assist features.\n\n6. Towing Capacity: Many SUVs are designed with towing capabilities, allowing them to haul trailers or boats.\n\nNow, based on Car and Driver reviews, here are some recommended SUV models from Mercedes-Benz:\n\n1. Mercedes-Benz GLE: The GLE offers a comfortable and luxurious cabin, advanced safety features, a powerful engine lineup, and excellent off-road capabilities. It provides a smooth ride and comes with various tech features like a large infotainment display, smartphone integration, and a host of driver-assist systems.\n\n2. Mercedes-Benz GLC: The GLC combines style, comfort, and performance. It features a well-appointed interior, a user-friendly infotainment system, a smooth ride, and a range of engine options. Additionally, it offers good fuel economy and advanced safety features.\n\n3. Mercedes-Benz GLS: The GLS is a large luxury SUV that provides ample seating and cargo space. It offers a comfortable ride, powerful engine choices, advanced technology features, and a refined interior. The GLS also provides excellent towing capacity and a plethora of safety features.\n\nIn terms of reliability, Mercedes-Benz SUVs generally have a good reputation, but like any vehicle, they may encounter some common problems. These can include electrical issues, transmission problems, and occasional brake or suspension concerns. However, regular maintenance and servicing can help mitigate these problems.\n\nMaintenance and cost of operation for Mercedes-Benz SUVs can be higher compared to non-luxury brands due to the premium nature of the vehicles. Genuine parts and specialized servicing can contribute to higher maintenance costs.\n\nWhen it comes to pricing, Mercedes-Benz SUVs tend to be on the higher end of the spectrum due to their luxury status. Prices can vary depending on the specific model, trim level, optional features, and region.\n\nUser experience with Mercedes-Benz SUVs is generally positive, with drivers appreciating the comfort, performance, and advanced features. However, personal preferences and experiences can vary.\n\nUltimately, it is recommended to visit a Mercedes-Benz dealership, consult the official website, or refer to trusted automotive sources for the most accurate and up-to-date information on features, pricing, reliability, and common problems associated with specific Mercedes-Benz SUV models.",
+...
 ```
 
 ### Used Car Listings
@@ -157,54 +157,54 @@ URL: http://localhost:8080/api/v1/search_make?make=Ferrari. This would then retu
 
 ```json
 "databaseListings": [
-{
-"id": 127,
-"guid": "0658ae22-42ab",
-"vin": "ZFF83CLA8K0243317",
-"price": "395990",
-"miles": "4892",
-"year": "2019",
-"make": "Ferrari",
-"model": "812",
-"trim": "Base",
-"drivetrain": "RWD",
-"stockNo": "PN164",
-"bodyType": "Coupe",
-"vehicleType": "Car",
-"fuelType": "Premium Unleaded",
-"engineSize": "6.5",
-"engineBlock": "V",
-"sellerName": "wide world ferrari",
-"transmission": "Automatic",
-"street": "101 Route 59",
-"city": "Spring Valley",
-"state": "NY",
-"zip": "10977"
-},
-{
-"id": 195,
-"guid": "aaf0584c-f27d",
-"vin": "ZFF78VHA0F0213610",
-"price": "679985",
-"miles": "1299",
-"year": "2015",
-"make": "Ferrari",
-"model": "458 Speciale A",
-"trim": "Base",
-"drivetrain": "RWD",
-"stockNo": "T213610",
-"bodyType": "Convertible",
-"vehicleType": "Car",
-"fuelType": "Unleaded",
-"engineSize": "4.5",
-"engineBlock": "V",
-"sellerName": "maserati of central florida",
-"transmission": "Automatic",
-"street": "4891 Vineland Rd",
-"city": "Orlando",
-"state": "FL",
-"zip": "32811"
-},
+    {
+    "id": 127,
+    "guid": "0658ae22-42ab",
+    "vin": "ZFF83CLA8K0243317",
+    "price": "395990",
+    "miles": "4892",
+    "year": "2019",
+    "make": "Ferrari",
+    "model": "812",
+    "trim": "Base",
+    "drivetrain": "RWD",
+    "stockNo": "PN164",
+    "bodyType": "Coupe",
+    "vehicleType": "Car",
+    "fuelType": "Premium Unleaded",
+    "engineSize": "6.5",
+    "engineBlock": "V",
+    "sellerName": "wide world ferrari",
+    "transmission": "Automatic",
+    "street": "101 Route 59",
+    "city": "Spring Valley",
+    "state": "NY",
+    "zip": "10977"
+    },
+    {
+    "id": 195,
+    "guid": "aaf0584c-f27d",
+    "vin": "ZFF78VHA0F0213610",
+    "price": "679985",
+    "miles": "1299",
+    "year": "2015",
+    "make": "Ferrari",
+    "model": "458 Speciale A",
+    "trim": "Base",
+    "drivetrain": "RWD",
+    "stockNo": "T213610",
+    "bodyType": "Convertible",
+    "vehicleType": "Car",
+    "fuelType": "Unleaded",
+    "engineSize": "4.5",
+    "engineBlock": "V",
+    "sellerName": "maserati of central florida",
+    "transmission": "Automatic",
+    "street": "4891 Vineland Rd",
+    "city": "Orlando",
+    "state": "FL",
+    "zip": "32811"
+    },
 ...
 ```
 
@@ -224,54 +224,54 @@ This would then return the following information:
 
 ```json
 "databaseListings": [
-{
-"id": 5312,
-"guid": "f241ab8b-eb67",
-"vin": "ZFF67NFAXE0198307",
-"price": "",
-"miles": "",
-"year": "2014",
-"make": "Ferrari",
-"model": "458 Italia",
-"trim": "Base",
-"drivetrain": "RWD",
-"stockNo": "",
-"bodyType": "Coupe",
-"vehicleType": "Car",
-"fuelType": "Premium Unleaded",
-"engineSize": "4.5",
-"engineBlock": "V",
-"sellerName": "reynolds auto group",
-"transmission": "Automatic",
-"street": "",
-"city": "Dayton",
-"state": "OH",
-"zip": "45430"
-},
-{
-"id": 1356,
-"guid": "cd8edc52-3b17",
-"vin": "ZFF67NFAXF0203975",
-"price": "",
-"miles": "12551",
-"year": "2015",
-"make": "Ferrari",
-"model": "458 Italia",
-"trim": "Base",
-"drivetrain": "RWD",
-"stockNo": "",
-"bodyType": "Coupe",
-"vehicleType": "Car",
-"fuelType": "Premium Unleaded",
-"engineSize": "4.5",
-"engineBlock": "V",
-"sellerName": "0 to 60 motorsports",
-"transmission": "Automatic",
-"street": "1068 Main St",
-"city": "Willimantic",
-"state": "CT",
-"zip": "06226"
-},
+    {
+    "id": 5312,
+    "guid": "f241ab8b-eb67",
+    "vin": "ZFF67NFAXE0198307",
+    "price": "",
+    "miles": "",
+    "year": "2014",
+    "make": "Ferrari",
+    "model": "458 Italia",
+    "trim": "Base",
+    "drivetrain": "RWD",
+    "stockNo": "",
+    "bodyType": "Coupe",
+    "vehicleType": "Car",
+    "fuelType": "Premium Unleaded",
+    "engineSize": "4.5",
+    "engineBlock": "V",
+    "sellerName": "reynolds auto group",
+    "transmission": "Automatic",
+    "street": "",
+    "city": "Dayton",
+    "state": "OH",
+    "zip": "45430"
+    },
+    {
+    "id": 1356,
+    "guid": "cd8edc52-3b17",
+    "vin": "ZFF67NFAXF0203975",
+    "price": "",
+    "miles": "12551",
+    "year": "2015",
+    "make": "Ferrari",
+    "model": "458 Italia",
+    "trim": "Base",
+    "drivetrain": "RWD",
+    "stockNo": "",
+    "bodyType": "Coupe",
+    "vehicleType": "Car",
+    "fuelType": "Premium Unleaded",
+    "engineSize": "4.5",
+    "engineBlock": "V",
+    "sellerName": "0 to 60 motorsports",
+    "transmission": "Automatic",
+    "street": "1068 Main St",
+    "city": "Willimantic",
+    "state": "CT",
+    "zip": "06226"
+    },
 ...
 ```
 
@@ -292,60 +292,117 @@ information:
 
 ```json
 "databaseListings": [
-{
-"id": 43,
-"guid": "f454a84d-ced8",
-"vin": "4JGBF7BE4BA647986",
-"price": "16055",
-"miles": "159645",
-"year": "2011",
-"make": "Mercedes-Benz",
-"model": "GL-Class",
-"trim": "GL450",
-"drivetrain": "4WD",
-"stockNo": "B117986",
-"bodyType": "SUV",
-"vehicleType": "Truck",
-"fuelType": "Premium Unleaded",
-"engineSize": "4.7",
-"engineBlock": "V",
-"sellerName": "ciocca chevrolet of west chester",
-"transmission": "Automatic",
-"street": "715 Autopark Blvd",
-"city": "West Chester",
-"state": "PA",
-"zip": "19382"
-},
-{
-"id": 87,
-"guid": "3592b0c4-64b8",
-"vin": "4JGDF7DE3FA579286",
-"price": "28595",
-"miles": "93805",
-"year": "2015",
-"make": "Mercedes-Benz",
-"model": "GL-Class",
-"trim": "GL550",
-"drivetrain": "4WD",
-"stockNo": "J21205-2",
-"bodyType": "SUV",
-"vehicleType": "Truck",
-"fuelType": "Premium Unleaded",
-"engineSize": "4.7",
-"engineBlock": "V",
-"sellerName": "jaguar dallas",
-"transmission": "Automatic",
-"street": "11400 North Central Expy",
-"city": "Dallas",
-"state": "TX",
-"zip": "75243"
-},
+    {
+    "id": 43,
+    "guid": "f454a84d-ced8",
+    "vin": "4JGBF7BE4BA647986",
+    "price": "16055",
+    "miles": "159645",
+    "year": "2011",
+    "make": "Mercedes-Benz",
+    "model": "GL-Class",
+    "trim": "GL450",
+    "drivetrain": "4WD",
+    "stockNo": "B117986",
+    "bodyType": "SUV",
+    "vehicleType": "Truck",
+    "fuelType": "Premium Unleaded",
+    "engineSize": "4.7",
+    "engineBlock": "V",
+    "sellerName": "ciocca chevrolet of west chester",
+    "transmission": "Automatic",
+    "street": "715 Autopark Blvd",
+    "city": "West Chester",
+    "state": "PA",
+    "zip": "19382"
+    },
+    {
+    "id": 87,
+    "guid": "3592b0c4-64b8",
+    "vin": "4JGDF7DE3FA579286",
+    "price": "28595",
+    "miles": "93805",
+    "year": "2015",
+    "make": "Mercedes-Benz",
+    "model": "GL-Class",
+    "trim": "GL550",
+    "drivetrain": "4WD",
+    "stockNo": "J21205-2",
+    "bodyType": "SUV",
+    "vehicleType": "Truck",
+    "fuelType": "Premium Unleaded",
+    "engineSize": "4.7",
+    "engineBlock": "V",
+    "sellerName": "jaguar dallas",
+    "transmission": "Automatic",
+    "street": "11400 North Central Expy",
+    "city": "Dallas",
+    "state": "TX",
+    "zip": "75243"
+    },
 ...
 ```
 
 ### Example of a Full API Call
 
-The full API call includes both the `chatGptInfo` and `databaseListings` object.
+The full API call includes both the `chatGptInfo` and `databaseListings` object. Assume you are searching for a Lexus GX
+using the following URL: http://localhost:8080/api/v1/search_model?make=Lexus&model=GX. This would return the following
+JSON result:
+
+```json
+{
+  "chatGptInfo": "The Lexus GX is a luxury midsize SUV that offers a combination of off-road capability, comfort, and reliability. It has generally received positive reviews from both consumers and automotive experts. It is known for its strong build quality and dependable performance, making it a reliable choice for buyers.\n\nIn terms of maintenance, the Lexus GX is generally considered to be a low-maintenance vehicle. Regular servicing and oil changes are recommended, but it doesn't have any major reliability issues. The cost of operation, however, can be on the higher side due to its luxury status and the need for premium fuel.\n\nUsers often praise the Lexus GX for its comfortable and well-appointed interior, smooth ride quality, and ample space for both passengers and cargo. It offers a quiet and luxurious driving experience, making long trips enjoyable.\n\nWhen it comes to common problems with used models, some owners have reported issues with the infotainment system, suspension components, and electrical systems. However, these problems are relatively rare and not widespread.\n\nAs for its features, the Lexus GX comes equipped with a range of advanced technologies such as a touchscreen infotainment system, navigation, premium audio system, leather upholstery, heated and ventilated seats, adaptive cruise control, and a host of safety features like blind-spot monitoring and lane departure warning.\n\nFor a good used price and mileage to look for, it is recommended to search for a Lexus GX with around 50,000 to 70,000 miles on the odometer. Prices can vary based on factors such as model year, trim level, and condition, but a reasonable range would be between $30,000 to $40,000 USD.",
+  "databaseListings": [
+    {
+      "id": 83,
+      "guid": "aea8a65d-e91c",
+      "vin": "JTJBT20X480150436",
+      "price": "17995",
+      "miles": "107146",
+      "year": "2008",
+      "make": "Lexus",
+      "model": "GX",
+      "trim": "470",
+      "drivetrain": "4WD",
+      "stockNo": "2103800",
+      "bodyType": "SUV",
+      "vehicleType": "Truck",
+      "fuelType": "Premium Unleaded",
+      "engineSize": "4.7",
+      "engineBlock": "V",
+      "sellerName": "damas auto va",
+      "transmission": "Automatic",
+      "street": "25358 Pleasant Valley Road 120",
+      "city": "Chantilly",
+      "state": "VA",
+      "zip": "20152"
+    },
+    {
+      "id": 151,
+      "guid": "b42e6c32-25e9",
+      "vin": "JTJBT20X860117128",
+      "price": "",
+      "miles": "218983",
+      "year": "2006",
+      "make": "Lexus",
+      "model": "GX",
+      "trim": "470",
+      "drivetrain": "4WD",
+      "stockNo": "10202",
+      "bodyType": "SUV",
+      "vehicleType": "Truck",
+      "fuelType": "Premium Unleaded",
+      "engineSize": "4.7",
+      "engineBlock": "V",
+      "sellerName": "cle cars llc",
+      "transmission": "Automatic",
+      "street": "11111 Lorain Avenue",
+      "city": "Cleveland",
+      "state": "OH",
+      "zip": "44111"
+    },
+    ...
+```
 
 ## Features to Implement in the Future
 
