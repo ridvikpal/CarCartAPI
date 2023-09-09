@@ -351,7 +351,7 @@ All calls to CarCostAPI are multithreaded using Spring Boot `@Async` calls and `
 This makes CarCostAPI much faster. The main limiting speed for CarCostAPI from my testing is the ChatGPT API. If we utilize the
 enterprise license and key, then it should be much faster, since OpenAI reserves resources for enterprises. But currently I have a 
 cheap consumer license, and that is good enough for reasonably fast speeds under ~15 seconds. All configuration for Multithreading is done in 
-the `CarCostAPIConfiguration` class. Please see the design flow chart to determine how this is handled.
+the `CarCostAPIConfiguration` class. Please see the design flow chart to understand how this is handled.
 
 ## Example of a Full API Call
 
