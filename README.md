@@ -19,7 +19,8 @@
       * [Example for Make Search](#example-for-make-search)
       * [Example for Model Search](#example-for-model-search)
       * [Example for Car Type Recommendation](#example-for-car-type-recommendation)
-    * [Example of a Full API Call](#example-of-a-full-api-call)
+    * [Multithreading](#multithreading)
+  * [Example of a Full API Call](#example-of-a-full-api-call)
   * [Features to Implement in the Future](#features-to-implement-in-the-future)
 <!-- TOC -->
 
