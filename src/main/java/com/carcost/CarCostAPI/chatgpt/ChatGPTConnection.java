@@ -11,11 +11,11 @@ import java.util.ArrayList;
 
 @Component
 public class ChatGPTConnection {
-    private static WebClient webClient;
+    private WebClient webClient;
 
-    private static String openAiApiKey;
+    private String openAiApiKey;
 
-    private static final String openAiUrl = "https://api.openai.com/v1/chat/completions";
+    private final String openAiUrl = "https://api.openai.com/v1/chat/completions";
 
     @Autowired
     public ChatGPTConnection(WebClient.Builder webClient, @Value("${openai.api.key}") String openAiApiKey) {
@@ -23,15 +23,18 @@ public class ChatGPTConnection {
         this.openAiApiKey = openAiApiKey;
     }
 
-    private static String getChatGPTResponse(String _model, String _request, double _temperature){
-        ChatGPTRequest.Message _message = new ChatGPTRequest.Message(
-                "user",
-                _request
-        );
-        ArrayList<ChatGPTRequest.Message> _messages = new ArrayList<>();
-        _messages.add(_message);
+    private String getChatGPTResponse(String _model, String _request, double _temperature){
+        Message _messsage = new Message();
+        _messsage.setRole("user");
+        _messsage.setContent(_request);
 
-        ChatGPTRequest makeInfoRequest = new ChatGPTRequest(_model, _messages, _temperature);
+        ArrayList<Message> _messages = new ArrayList<>();
+        _messages.add(_messsage);
+
+        ChatGPTRequest makeInfoRequest = new ChatGPTRequest();
+        makeInfoRequest.setModel(_model);
+        makeInfoRequest.setMessages(_messages);
+        makeInfoRequest.setTemperature(_temperature);
 
         ChatGPTResponse makeInfoObject = webClient.post()
                 .header("Authorization", "Bearer " + openAiApiKey)
@@ -42,7 +45,7 @@ public class ChatGPTConnection {
         return makeInfoObject.getChoices().get(0).getMessage().getContent();
     }
 
-    public static String getMakeInfo(String _make){
+    public String getMakeInfo(String _make){
         return getChatGPTResponse(
             "gpt-3.5-turbo",
             "Provide a short description of the car manufacturer " + _make + ". Describe the " +
@@ -58,7 +61,7 @@ public class ChatGPTConnection {
         );
     }
 
-    public static String getModelInfo(String _make, String _makeModel){
+    public String getModelInfo(String _make, String _makeModel){
         if (_make == null || _make.trim().isEmpty() || _makeModel == null || _makeModel.trim().isEmpty()){
             return "";
         }
@@ -74,7 +77,7 @@ public class ChatGPTConnection {
         );
     }
 
-    public static String getCarRecommendation(String _type, String _make){
+    public String getCarRecommendation(String _type, String _make){
         if (_make == null || _make.trim().isEmpty()){
             return getChatGPTResponse(
                     "gpt-3.5-turbo",
