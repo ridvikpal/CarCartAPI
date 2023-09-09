@@ -149,4 +149,10 @@ URL: https://localhost:8080/api/v1/recommendation?type=SUV&make=Mercedes-Benz.
 
 ## Features to Implement in the Future
 
-There are various features I would like to implement 
+There are lots of features I would like to implement once I get the time:
+
+* Filtering entries by date. For example, the user may only like to see listings between a specific range, or sort by the newest listings first.
+* Sorting by car trim. For example, the user may only want the Touring Version of the Honda Civic.
+* Sorting by car specifications, including engine size, drivetrain, transmission, and fuel type. For example, a user may only want a car that is 4WD or AWD.
+* Sorting by mileage. The user may want a low mileage car and prioritize those listings.
+* Creating a website using this API by adding a front-end view.
