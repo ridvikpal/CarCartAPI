@@ -1,35 +1,33 @@
 # CarCostAPI
 
 <!-- TOC -->
-
 * [CarCostAPI](#carcostapi)
-    * [Introduction](#introduction)
-    * [Goals](#goals)
-    * [Maven Dependencies](#maven-dependencies)
-    * [Configuration for Application Properties File](#configuration-for-application-properties-file)
-    * [Design](#design)
-    * [Features](#features)
-        * [GET Used Car Listings](#get-used-car-listings)
-            * [Find a Specific Make](#find-a-specific-make)
-                * [Example](#example)
-            * [Return a Specific Make and Model](#return-a-specific-make-and-model)
-                * [Example](#example-1)
-            * [Return a Specific Type and Make](#return-a-specific-type-and-make)
-                * [Example](#example-2)
-        * [GET OpenAI ChatGPT Integration](#get-openai-chatgpt-integration)
-            * [Example for Make Search](#example-for-make-search)
-            * [Example for Model Search](#example-for-model-search)
-            * [Example for Car Type Recommendation](#example-for-car-type-recommendation)
-        * [POST Adding a Car Listing](#post-adding-a-car-listing)
-            * [Example](#example-3)
-        * [PUT Updating a Car Listing](#put-updating-a-car-listing)
-            * [Example](#example-4)
-        * [DELETE Car Listing](#delete-car-listing)
-            * [Example](#example-5)
-        * [Multithreading](#multithreading)
-    * [Example of a Full GET API Call](#example-of-a-full-get-api-call)
-    * [Features to Implement in the Future](#features-to-implement-in-the-future)
-
+  * [Introduction](#introduction)
+  * [Goals](#goals)
+  * [Maven Dependencies](#maven-dependencies)
+  * [Configuration for Application Properties File](#configuration-for-application-properties-file)
+  * [Design](#design)
+  * [Features](#features)
+    * [GET Used Car Listings](#get-used-car-listings)
+      * [Find a Specific Make](#find-a-specific-make)
+        * [Example](#example)
+      * [Return a Specific Make and Model](#return-a-specific-make-and-model)
+        * [Example](#example-1)
+      * [Return a Specific Type and Make](#return-a-specific-type-and-make)
+        * [Example](#example-2)
+    * [GET OpenAI ChatGPT Integration](#get-openai-chatgpt-integration)
+      * [Example for Make Search](#example-for-make-search)
+      * [Example for Model Search](#example-for-model-search)
+      * [Example for Car Type Recommendation](#example-for-car-type-recommendation)
+    * [POST Adding a Car Listing](#post-adding-a-car-listing)
+      * [Example](#example-3)
+    * [PUT Updating a Car Listing](#put-updating-a-car-listing)
+      * [Example](#example-4)
+    * [DELETE Car Listing](#delete-car-listing)
+      * [Example](#example-5)
+    * [Multithreading](#multithreading)
+  * [Example of a Full GET API Call](#example-of-a-full-get-api-call)
+  * [Features to Implement in the Future](#features-to-implement-in-the-future)
 <!-- TOC -->
 
 ## Introduction
@@ -99,8 +97,29 @@ class and modifying function names in the `@Repository` class). Ideally, the dat
 ## Design
 
 The API is designed with the Spring MVC pattern to align with industry standard REST principles. It includes a
-controller, service, repository, entity, and configuration classes. The organization of the API can be illustrated in
-the following flow diagram:
+controller, service, repository, entity, and configuration classes. The organization of the API and by it's various classes can be illustrated in the following flow diagram:
+
+![CarCostAPI Class Design Diagram](src/main/resources/images/CarCostAPI%20Design.jpg)
+
+Each class serves the following purpose:
+
+| Class                          | Description |
+|--------------------------------|-------------|
+| `CarCostAPIApplication`        |             |
+| `CarCostAPIConfiguration`      |             |
+| `CarCostAPIController`         |             |
+| `CarCostAPIService`            |             |
+| `CarCostAPIRepository`         |             |
+| `CarCostAPIRepositoryThreaded` |             | 
+| `CarData`                      |             |
+| `APIDataReturn`                |             |
+| `ChatGPTConnection`            |             |
+| `ChatGPTRequest`               |             |
+| `ChatGPTResponse`              |             |
+| `Choice`                       |             |
+| `Message`                      |             |
+| `Usage`                        |             |
+
 
 ## Features
 
