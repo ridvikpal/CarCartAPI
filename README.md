@@ -97,29 +97,32 @@ class and modifying function names in the `@Repository` class). Ideally, the dat
 ## Design
 
 The API is designed with the Spring MVC pattern to align with industry standard REST principles. It includes a
-controller, service, repository, entity, and configuration classes. The organization of the API and by it's various classes can be illustrated in the following flow diagram:
+controller, service, repository, entity, and configuration classes. The organization of the API and by its various classes can be illustrated in the following flow diagram:
 
 ![CarCostAPI Class Design Diagram](src/main/resources/images/CarCostAPI%20Design.jpg)
 
 Each class serves the following purpose:
 
-| Class                          | Description |
-|--------------------------------|-------------|
-| `CarCostAPIApplication`        |             |
-| `CarCostAPIConfiguration`      |             |
-| `CarCostAPIController`         |             |
-| `CarCostAPIService`            |             |
-| `CarCostAPIRepository`         |             |
-| `CarCostAPIRepositoryThreaded` |             | 
-| `CarData`                      |             |
-| `APIDataReturn`                |             |
-| `ChatGPTConnection`            |             |
-| `ChatGPTRequest`               |             |
-| `ChatGPTResponse`              |             |
-| `Choice`                       |             |
-| `Message`                      |             |
-| `Usage`                        |             |
+<div align="center">
 
+| Class                          | Description                                                                          |
+|--------------------------------|--------------------------------------------------------------------------------------|
+| `CarCostAPIApplication`        | The main class for running the Spring Boot Application                               |
+| `CarCostAPIConfiguration`      | This class holds the configuration for the multithreading with Spring Boot `@Async`. |
+| `CarCostAPIController`         | This class handles the API requests directly (controller class),                     |
+| `CarCostAPIService`            | This class connects to services, such as the MySQL database and ChatGPT.             |
+| `CarCostAPIRepository`         | The implementation of `JpaRepository` for the MySQL database.                         |
+| `CarCostAPIRepositoryThreaded` | A wrapper around `CarCostAPIRepository` providing multithreading support and logging | 
+| `CarData`                      | A data class containing the `@Entity` for the MySQL database table.                  |
+| `APIDataReturn`                | A data class used for returning both `ChatGPTResponse` and the `CarData`             |
+| `ChatGPTConnection`            | This class handles all direct connections to ChatGPT.                                |
+| `ChatGPTRequest`               | A data class used in sending requests to the ChatGPT REST API.                       |
+| `ChatGPTResponse`              | A data class used in receiving requests from the ChatGPT REST API.                   |
+| `Choice`                       | A data class used as a component of `ChatGPTResponse`                                |
+| `Message`                      | A data class used as a component of both `ChatGPTResponse` and `ChatGPTRequest`      |
+| `Usage`                        | A data class used as a component of `ChatGPTResponse`                                |
+
+</div>
 
 ## Features
 
@@ -414,7 +417,7 @@ a `POST` request to http://localhost:8080/carcostapi/add_car with the response b
 }
 ```
 
-Your lexus would then be added to the database with it's own ID, and the object would also be returned to you for your
+Your lexus would then be added to the database with its own ID, and the object would also be returned to you for your
 reference!
 
 ### PUT Updating a Car Listing
