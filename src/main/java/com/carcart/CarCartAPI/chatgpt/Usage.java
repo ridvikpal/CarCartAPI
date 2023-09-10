@@ -1,4 +1,4 @@
-package com.carcost.CarCostAPI.chatgpt;
+package com.carcart.CarCartAPI.chatgpt;
 
 public class Usage {
     private int prompt_tokens;

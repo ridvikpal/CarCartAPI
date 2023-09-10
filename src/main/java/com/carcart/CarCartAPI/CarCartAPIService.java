@@ -1,9 +1,7 @@
-package com.carcost.CarCostAPI;
+package com.carcart.CarCartAPI;
 
-import com.carcost.CarCostAPI.chatgpt.ChatGPTConnection;
+import com.carcart.CarCartAPI.chatgpt.ChatGPTConnection;
 import jakarta.transaction.Transactional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -13,15 +11,15 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 @Service
-public class CarCostAPIService {
+public class CarCartAPIService {
 
-    private final CarCostAPIRepositoryThreaded carCostAPIRepositoryThreaded;
+    private final CarCartAPIRepositoryThreaded carCartAPIRepositoryThreaded;
 
     private final ChatGPTConnection chatGPTConnection;
 
     @Autowired
-    public CarCostAPIService(CarCostAPIRepositoryThreaded carCostAPIRepositoryThreaded, ChatGPTConnection chatGPTConnection) {
-        this.carCostAPIRepositoryThreaded = carCostAPIRepositoryThreaded;
+    public CarCartAPIService(CarCartAPIRepositoryThreaded carCartAPIRepositoryThreaded, ChatGPTConnection chatGPTConnection) {
+        this.carCartAPIRepositoryThreaded = carCartAPIRepositoryThreaded;
         this.chatGPTConnection = chatGPTConnection;
     }
     
@@ -30,9 +28,9 @@ public class CarCostAPIService {
         CompletableFuture<String> chatGptMakeInfo = chatGPTConnection.getMakeInfo(_make);
         CompletableFuture<List<CarData>> matchingMakeEntries;
         if (_low_price){
-            matchingMakeEntries = carCostAPIRepositoryThreaded.threadedFindAllByMakeContainingOrderByPriceAsc(_make);
+            matchingMakeEntries = carCartAPIRepositoryThreaded.threadedFindAllByMakeContainingOrderByPriceAsc(_make);
         }else{
-            matchingMakeEntries = carCostAPIRepositoryThreaded.threadedFindAllByMakeContaining(_make);
+            matchingMakeEntries = carCartAPIRepositoryThreaded.threadedFindAllByMakeContaining(_make);
         }
         return CompletableFuture.completedFuture(new APIDataReturn(chatGptMakeInfo.get(), matchingMakeEntries.get()));
     }
@@ -43,9 +41,9 @@ public class CarCostAPIService {
         CompletableFuture<List<CarData>> matchingModelEntries;
         if (_low_price){
             matchingModelEntries =
-                    carCostAPIRepositoryThreaded.threadedFindAllByMakeContainingAndModelContainingOrderByPriceAsc(_make, _model);
+                    carCartAPIRepositoryThreaded.threadedFindAllByMakeContainingAndModelContainingOrderByPriceAsc(_make, _model);
         }else{
-            matchingModelEntries = carCostAPIRepositoryThreaded.threadedFindAllByMakeContainingAndModelContaining(_make, _model);
+            matchingModelEntries = carCartAPIRepositoryThreaded.threadedFindAllByMakeContainingAndModelContaining(_make, _model);
         }
         return CompletableFuture.completedFuture(new APIDataReturn(chatGptModelInfo.get(), matchingModelEntries.get()));
     }
@@ -55,9 +53,9 @@ public class CarCostAPIService {
         CompletableFuture<String> chatGptCarRecommendation = chatGPTConnection.getCarRecommendation(_type, _make);
         CompletableFuture<List<CarData>> matchingTypeEntries;
         if (_make == null || _make.trim().isEmpty()){
-            matchingTypeEntries = carCostAPIRepositoryThreaded.threadedFindAllByBodyTypeContaining(_type);
+            matchingTypeEntries = carCartAPIRepositoryThreaded.threadedFindAllByBodyTypeContaining(_type);
         }else{
-            matchingTypeEntries = carCostAPIRepositoryThreaded.threadedFindAllByBodyTypeContainingAndMakeContaining(_type, _make);
+            matchingTypeEntries = carCartAPIRepositoryThreaded.threadedFindAllByBodyTypeContainingAndMakeContaining(_type, _make);
         }
         return CompletableFuture.completedFuture(new APIDataReturn(chatGptCarRecommendation.get(), matchingTypeEntries.get()));
     }
@@ -65,14 +63,14 @@ public class CarCostAPIService {
 
     @Async
     public CompletableFuture<CarData> insertNewCarListing(CarData carData) {
-        CompletableFuture<CarData> result = carCostAPIRepositoryThreaded.threadedInsertIntoDatabase(carData);
+        CompletableFuture<CarData> result = carCartAPIRepositoryThreaded.threadedInsertIntoDatabase(carData);
         return result;
     }
 
     @Async
     @Transactional
     public CompletableFuture<CarData> updateCarListing(int id, String price, String miles, String sellerName, String street, String city, String state, String zip) {
-        CompletableFuture<CarData> result = carCostAPIRepositoryThreaded.threadedUpdateInDatabase(
+        CompletableFuture<CarData> result = carCartAPIRepositoryThreaded.threadedUpdateInDatabase(
                 id, price, miles, sellerName, street, city, state, zip
         );
         return result;
@@ -80,7 +78,7 @@ public class CarCostAPIService {
 
     @Async
     public CompletableFuture<CarData> deleteCarListing(int id){
-        CompletableFuture<CarData> result = carCostAPIRepositoryThreaded.threadedDeleteFromDatabase(id);
+        CompletableFuture<CarData> result = carCartAPIRepositoryThreaded.threadedDeleteFromDatabase(id);
         return result;
     }
 }

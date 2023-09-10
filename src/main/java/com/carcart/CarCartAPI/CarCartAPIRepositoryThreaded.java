@@ -1,4 +1,4 @@
-package com.carcost.CarCostAPI;
+package com.carcart.CarCartAPI;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,14 +11,14 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 @Component
-public class CarCostAPIRepositoryThreaded {
+public class CarCartAPIRepositoryThreaded {
 
-    private CarCostAPIRepository carCostAPIRepository;
-    private Logger logger = LoggerFactory.getLogger(CarCostAPIRepositoryThreaded.class);
+    private CarCartAPIRepository carCartAPIRepository;
+    private Logger logger = LoggerFactory.getLogger(CarCartAPIRepositoryThreaded.class);
 
     @Autowired
-    public CarCostAPIRepositoryThreaded(CarCostAPIRepository carCostAPIRepository) {
-        this.carCostAPIRepository = carCostAPIRepository;
+    public CarCartAPIRepositoryThreaded(CarCartAPIRepository carCartAPIRepository) {
+        this.carCartAPIRepository = carCartAPIRepository;
     }
 
     
@@ -26,7 +26,7 @@ public class CarCostAPIRepositoryThreaded {
     public CompletableFuture<List<CarData>> threadedFindAllByMakeContaining(String make) {
         logger.info("Starting thread for returning make listings from database on {}", Thread.currentThread().getName());
         long start = System.currentTimeMillis();
-        List<CarData> result = carCostAPIRepository.findAllByMakeContaining(make);
+        List<CarData> result = carCartAPIRepository.findAllByMakeContaining(make);
         long end = System.currentTimeMillis();
         logger.info("Ending thread for returning make listings from database on {}", Thread.currentThread().getName());
         logger.info("Completed returning make listings from database in {} ms", (end - start));
@@ -38,7 +38,7 @@ public class CarCostAPIRepositoryThreaded {
     public CompletableFuture<List<CarData>> threadedFindAllByBodyTypeContaining(String type) {
         logger.info("Starting thread for returning type listings from database on {}", Thread.currentThread().getName());
         long start = System.currentTimeMillis();
-        List<CarData> result = carCostAPIRepository.findAllByBodyTypeContaining(type);
+        List<CarData> result = carCartAPIRepository.findAllByBodyTypeContaining(type);
         long end = System.currentTimeMillis();
         logger.info("Ending thread for returning type listings from database on {}", Thread.currentThread().getName());
         logger.info("Completed returning type listings from database in {} ms", (end - start));
@@ -50,7 +50,7 @@ public class CarCostAPIRepositoryThreaded {
     public CompletableFuture<List<CarData>> threadedFindAllByBodyTypeContainingAndMakeContaining(String type, String make) {
         logger.info("Starting thread for returning type listings with specific make from database on {}", Thread.currentThread().getName());
         long start = System.currentTimeMillis();
-        List<CarData> result = carCostAPIRepository.findAllByBodyTypeContainingAndMakeContaining(type, make);
+        List<CarData> result = carCartAPIRepository.findAllByBodyTypeContainingAndMakeContaining(type, make);
         long end = System.currentTimeMillis();
         logger.info("Ending thread for returning type listings with specific make from database on {}", Thread.currentThread().getName());
         logger.info("Completed returning type listings with specific make from database in {} ms", (end - start));
@@ -62,7 +62,7 @@ public class CarCostAPIRepositoryThreaded {
     public CompletableFuture<List<CarData>> threadedFindAllByMakeContainingOrderByPriceAsc(String make) {
         logger.info("Starting thread for returning make listings ordered by low price from database on {}", Thread.currentThread().getName());
         long start = System.currentTimeMillis();
-        List<CarData> result = carCostAPIRepository.findAllByMakeContainingOrderByPriceAsc(make);
+        List<CarData> result = carCartAPIRepository.findAllByMakeContainingOrderByPriceAsc(make);
         long end = System.currentTimeMillis();
         logger.info("Ending thread for returning make listings ordered by low price from database on {}", Thread.currentThread().getName());
         logger.info("Completed returning make listings ordered by low price from database in {} ms", (end - start));
@@ -74,7 +74,7 @@ public class CarCostAPIRepositoryThreaded {
     public CompletableFuture<List<CarData>> threadedFindAllByMakeContainingAndModelContainingOrderByPriceAsc(String make, String model) {
         logger.info("Starting thread for returning model listings ordered by low price from database on {}", Thread.currentThread().getName());
         long start = System.currentTimeMillis();
-        List<CarData> result = carCostAPIRepository.findAllByMakeContainingAndModelContainingOrderByPriceAsc(make, model);
+        List<CarData> result = carCartAPIRepository.findAllByMakeContainingAndModelContainingOrderByPriceAsc(make, model);
         long end = System.currentTimeMillis();
         logger.info("Ending thread for returning model listings ordered by low price from database on {}", Thread.currentThread().getName());
         logger.info("Completed returning model listings ordered by low price from database in {} ms", (end - start));
@@ -85,7 +85,7 @@ public class CarCostAPIRepositoryThreaded {
     public CompletableFuture<List<CarData>> threadedFindAllByMakeContainingAndModelContaining(String make, String model) {
         logger.info("Starting thread for returning model listings from database on {}", Thread.currentThread().getName());
         long start = System.currentTimeMillis();
-        List<CarData> result = carCostAPIRepository.findAllByMakeContainingAndModelContaining(make, model);
+        List<CarData> result = carCartAPIRepository.findAllByMakeContainingAndModelContaining(make, model);
         long end = System.currentTimeMillis();
         logger.info("Ending thread for returning model listings from database on {}", Thread.currentThread().getName());
         logger.info("Completed returning model listings from database in {} ms", (end - start));
@@ -96,14 +96,14 @@ public class CarCostAPIRepositoryThreaded {
     public CompletableFuture<CarData> threadedInsertIntoDatabase(CarData carData){
         logger.info("Starting thread for adding new car listing to database on {}", Thread.currentThread().getName());
         long start = System.currentTimeMillis();
-        boolean alreadyExists = carCostAPIRepository.existsById(carData.getId());
+        boolean alreadyExists = carCartAPIRepository.existsById(carData.getId());
         if (alreadyExists){
             long end = System.currentTimeMillis();
             logger.info("Ending thread for adding new car listing to database on {}", Thread.currentThread().getName());
             logger.info("Completed returning adding new car listing to database in {} ms", (end - start));
             return null;
         }
-        CarData newEntry = carCostAPIRepository.save(carData);
+        CarData newEntry = carCartAPIRepository.save(carData);
         long end = System.currentTimeMillis();
         logger.info("Ending thread for adding new car listing to database on {}", Thread.currentThread().getName());
         logger.info("Completed returning adding new car listing to database in {} ms", (end - start));
@@ -114,7 +114,7 @@ public class CarCostAPIRepositoryThreaded {
     public CompletableFuture<CarData> threadedUpdateInDatabase(int id, String price, String miles, String sellerName, String street, String city, String state, String zip) {
         logger.info("Starting thread for updating car listing in database on {}", Thread.currentThread().getName());
         long start = System.currentTimeMillis();
-        CarData carData = carCostAPIRepository.findById(id).get();
+        CarData carData = carCartAPIRepository.findById(id).get();
         if (price != null && !(price.trim().isEmpty())){
             carData.setPrice(price);
         }
@@ -137,7 +137,7 @@ public class CarCostAPIRepositoryThreaded {
             carData.setZip(zip);
         }
 
-        carCostAPIRepository.save(carData);
+        carCartAPIRepository.save(carData);
 
         long end = System.currentTimeMillis();
         logger.info("Ending thread for updating car listing in database on {}", Thread.currentThread().getName());
@@ -149,10 +149,10 @@ public class CarCostAPIRepositoryThreaded {
     public CompletableFuture<CarData> threadedDeleteFromDatabase(int id){
         logger.info("Starting thread for deleting car listing in database on {}", Thread.currentThread().getName());
         long start = System.currentTimeMillis();
-        Optional<CarData> carDataOptional = carCostAPIRepository.findById(id);
+        Optional<CarData> carDataOptional = carCartAPIRepository.findById(id);
 
         CarData carDataCopy = carDataOptional.get();
-        carCostAPIRepository.delete(carDataOptional.get());
+        carCartAPIRepository.delete(carDataOptional.get());
 
         long end = System.currentTimeMillis();
         logger.info("Ending thread for deleting car listing in database on {}", Thread.currentThread().getName());

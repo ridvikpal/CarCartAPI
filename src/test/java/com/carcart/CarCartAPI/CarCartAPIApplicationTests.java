@@ -1,10 +1,10 @@
-package com.carcost.CarCostAPI;
+package com.carcart.CarCartAPI;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CarCostAPIApplicationTests {
+class CarCartAPIApplicationTests {
 
 	@Test
 	void contextLoads() {

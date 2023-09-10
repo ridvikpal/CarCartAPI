@@ -1,7 +1,7 @@
-# CarCostAPI
+# CarCartAPI
 
 <!-- TOC -->
-* [CarCostAPI](#carcostapi)
+* [CarCartAPI](#carcartapi)
   * [Introduction](#introduction)
   * [Goals](#goals)
   * [Maven Dependencies](#maven-dependencies)
@@ -32,7 +32,7 @@
 
 ## Introduction
 
-CarCost is a RESTful API that aggregates used car data and information about these cars via the OpenAPI ChatGPT 3.5
+CarCartAPI is a RESTful API that aggregates and manages used car data and information about these cars via a MySQL database and the OpenAPI ChatGPT 3.5
 AI model. It is built using Java, Spring Boot, Maven, MySQL and of course OpenAI's own RESTful API for ChatGPT. It obeys
 standard REST principles, is designed using the Spring MVC design pattern, and returns data in an easily accessible JSON
 format. Currently, this is just an API, but in the future I would like to add multiple webpages to actually view the
@@ -41,7 +41,7 @@ data, creating a complete used car listings website!
 ## Goals
 
 I have always been into cars, and as I approach the age where I will buy my first car with my own money, I thought about
-combining my interest in cars with my interest in programming. Thus, the CarCostAPI was born! My first car was
+combining my interest in cars with my interest in programming. Thus, the CarCartAPI was born! My first car was
 definitely going to be a used one (new cars provide terrible ROI), so I figured why not create an API that aggregates
 used car data and provides some insight on which car to buy? Additionally, this API was a great opportunity to apply and
 improve my Spring Boot, MySQL, REST API and Java skills. Additionally, ChatGPT had always interested me, so it was also
@@ -49,7 +49,7 @@ my first time using its API! Unfortunately, the ChatGPT API was not free, but it
 
 ## Maven Dependencies
 
-CarCost utilizes the following maven dependencies:
+CarCartAPI utilizes the following maven dependencies:
 
 <div align="center">
 
@@ -99,7 +99,7 @@ class and modifying function names in the `@Repository` class). Ideally, the dat
 The API is designed with the Spring MVC pattern to align with industry standard REST principles. It includes a
 controller, service, repository, entity, and configuration classes. The organization of the API and by its various classes can be illustrated in the following flow diagram:
 
-![CarCostAPI Class Design Diagram](src/main/resources/images/CarCostAPI%20Design.jpg)
+![CarCartAPI Class Design Diagram](src/main/resources/images/CarCartAPI%20Design.jpg)
 
 Each class serves the following purpose:
 
@@ -107,12 +107,12 @@ Each class serves the following purpose:
 
 | Class                          | Description                                                                          |
 |--------------------------------|--------------------------------------------------------------------------------------|
-| `CarCostAPIApplication`        | The main class for running the Spring Boot Application                               |
-| `CarCostAPIConfiguration`      | This class holds the configuration for the multithreading with Spring Boot `@Async`. |
-| `CarCostAPIController`         | This class handles the API requests directly (controller class),                     |
-| `CarCostAPIService`            | This class connects to services, such as the MySQL database and ChatGPT.             |
-| `CarCostAPIRepository`         | The implementation of `JpaRepository` for the MySQL database.                         |
-| `CarCostAPIRepositoryThreaded` | A wrapper around `CarCostAPIRepository` providing multithreading support and logging | 
+| `CarCartAPIApplication`        | The main class for running the Spring Boot Application                               |
+| `CarCartAPIConfiguration`      | This class holds the configuration for the multithreading with Spring Boot `@Async`. |
+| `CarCartAPIController`         | This class handles the API requests directly (controller class),                     |
+| `CarCartAPIService`            | This class connects to services, such as the MySQL database and ChatGPT.             |
+| `CarCartAPIRepository`         | The implementation of `JpaRepository` for the MySQL database.                         |
+| `CarCartAPIRepositoryThreaded` | A wrapper around `CarCartAPIRepository` providing multithreading support and logging | 
 | `CarData`                      | A data class containing the `@Entity` for the MySQL database table.                  |
 | `APIDataReturn`                | A data class used for returning both `ChatGPTResponse` and the `CarData`             |
 | `ChatGPTConnection`            | This class handles all direct connections to ChatGPT.                                |
@@ -126,9 +126,9 @@ Each class serves the following purpose:
 
 ## Features
 
-CarCostAPI has common features for an auto listing API, with the addition of ChatGPT! This means using CarCostAPI,
+CarCartAPI has common features for an auto listing API, with the addition of ChatGPT! This means using CarCartAPI,
 someone could easily setup a website with no extra backend work; All that is needed is to provide a front end (View)!
-Actually, I am planning to create an auto listings website using CarCostAPI when I get the time! All items are returned
+Actually, I am planning to create an auto listings website using CarCartAPI when I get the time! All items are returned
 with as industry standard JSON objects
 
 ### GET Used Car Listings
@@ -141,14 +141,14 @@ information
 #### Find a Specific Make
 
 You can easily find used car listings for a specific make by sending a `GET` request to the URL
-extension `carcostapi/search_make`. You must provide the `String`
+extension `carcartapi/search_make`. You must provide the `String`
 parameter `make`. You can also provide another optional `boolean` parameter called `low_price` to sort the listings by
 the lowest price.
 
 ##### Example
 
 For example, assuming you want to find listings from Ferrari, you would go to the
-URL: http://localhost:8080/carcostapi/search_make?make=Ferrari. This would then return the following information:
+URL: http://localhost:8080/carcartapi/search_make?make=Ferrari. This would then return the following information:
 
 ```json
 "databaseListings": [
@@ -208,7 +208,7 @@ Note it is not sorted by the lowest price because we have not specified the `low
 #### Return a Specific Make and Model
 
 You can easily find used car listings for a specific make and model by sending a `GET` request the URL
-extension `carcostapi/search_model`. You must provide the `String` parameters `make` and `model`. You can also provide
+extension `carcartapi/search_model`. You must provide the `String` parameters `make` and `model`. You can also provide
 another optional `boolean` parameter
 called `low_price` to sort the listings by the lowest price.
 
@@ -216,7 +216,7 @@ called `low_price` to sort the listings by the lowest price.
 
 For example, assuming you wanted to find listings for a Ferrari 458 (the last Ferrari with a naturally aspirated engine)
 sorted by the lowest price, you can go to the
-URL: http://localhost:8080/carcostapi/search_model?make=Ferrari&model=458&low_price=true.
+URL: http://localhost:8080/carcartapi/search_model?make=Ferrari&model=458&low_price=true.
 This would then return the following information:
 
 ```json
@@ -277,14 +277,14 @@ Notice that the entries with no price are listed first, since we are sorting by 
 #### Return a Specific Type and Make
 
 You can easily find used car listings and for a specific type of car by sending a `GET` request to the URL
-extension: `carcostapi/recommendation`. You must provide the`String`
+extension: `carcartapi/recommendation`. You must provide the`String`
 parameter `type`. You can also provide an optional `String` parameter `make` to find listings for a particular type
 of car from a specific manufacturer.
 
 ##### Example
 
 For example, to find listings for SUVs from Mercedes-Benz, you can go to the
-URL: http://localhost:8080/carcostapi/recommendation?type=SUV&make=Mercedes-Benz. This would return the following
+URL: http://localhost:8080/carcartapi/recommendation?type=SUV&make=Mercedes-Benz. This would return the following
 information:
 
 ```json
@@ -354,7 +354,7 @@ the `chatGptInfo` JSON object.
 #### Example for Make Search
 
 For example, assume you are searching for cars from Ferrari using the following
-URL: http://localhost:8080/carcostapi/search_make?make=Ferrari. Then ChatGPT would recommend you:
+URL: http://localhost:8080/carcartapi/search_make?make=Ferrari. Then ChatGPT would recommend you:
 
 ```json
 "chatGptInfo": "Ferrari is an Italian luxury car manufacturer known for its high-performance sports cars and iconic brand image. Reviews of Ferrari vehicles often highlight their exceptional performance, precise handling, and striking design. However, some reviewers also note that Ferrari cars can be expensive to purchase and maintain, making them less practical for everyday use. In terms of reliability, Ferrari models are generally well-built, but their maintenance costs can be high due to the specialized nature of the brand. \n\nUser experience with Ferrari cars is often described as thrilling and exhilarating, with powerful engines and a sense of exclusivity. However, some users may find the firm suspension and limited interior space less comfortable for longer drives. Overall, Ferrari cars are admired for their performance and heritage, but they may not be the most practical choice for everyone.\n\nHere are five cars offered by Ferrari:\n\n1. Name: Ferrari 488 GTB\n   Engine: 3.9-liter V8\n   Type: Coupe\n   Features: Turbocharged, rear-wheel drive, advanced aerodynamics\n   MSRP: Starting at $262,647\n\n2. Name: Ferrari F8 Tributo\n   Engine: 3.9-liter V8\n   Type: Coupe\n   Features: Turbocharged, rear-wheel drive, advanced driver-assistance systems\n   MSRP: Starting at $276,550\n\n3. Name: Ferrari Portofino\n   Engine: 3.9-liter V8\n   Type: Convertible\n   Features: Retractable hardtop, rear-wheel drive, luxurious interior\n   MSRP: Starting at $215,000\n\n4. Name: Ferrari Roma\n   Engine: 3.9-liter V8\n   Type: Coupe\n   Features: Sleek design, advanced infotainment system, rear-wheel drive\n   MSRP: Starting at $222,420\n\n5. Name: Ferrari SF90 Stradale\n   Engine: 4.0-liter V8 combined with electric motors\n   Type: Hybrid\n   Features: All-wheel drive, high-performance hybrid powertrain, advanced technology\n   MSRP: Starting at $507,300",
@@ -363,7 +363,7 @@ URL: http://localhost:8080/carcostapi/search_make?make=Ferrari. Then ChatGPT wou
 #### Example for Model Search
 
 For example, assume you are searching for a new Ferrari 458 Italia (the last Ferrari with a naturally aspirated engine)
-using the following URL: http://localhost:8080/carcostapi/search_model?make=Ferrari&model=458&low_price=true
+using the following URL: http://localhost:8080/carcartapi/search_model?make=Ferrari&model=458&low_price=true
 Then, ChatGPT would recommend you:
 
 ```json
@@ -373,7 +373,7 @@ Then, ChatGPT would recommend you:
 #### Example for Car Type Recommendation
 
 For example, assume you are looking for a new SUV from Mercedes and use the following url from the API:
-http://localhost:8080/carcostapi/recommendation?type=SUV&make=Mercedes-Benz. Then, ChatGPT will recommend you:
+http://localhost:8080/carcartapi/recommendation?type=SUV&make=Mercedes-Benz. Then, ChatGPT will recommend you:
 
 ```json
 "chatGptInfo": "SUVs, or Sports Utility Vehicles, are a type of vehicle that combines elements of both passenger cars and off-road vehicles. They typically feature a high ground clearance, a spacious interior, and the ability to handle various terrains. Here are some common features found in SUVs:\n\n1. Size and Space: SUVs offer ample seating capacity for passengers and usually have a larger cargo area compared to sedans or hatchbacks.\n\n2. All-Wheel Drive (AWD) or Four-Wheel Drive (4WD): Many SUVs come with AWD or 4WD systems, enhancing their off-road capabilities and providing better traction on slippery or uneven surfaces.\n\n3. Safety Features: SUVs often include advanced safety features like stability control, traction control, anti-lock braking systems, multiple airbags, blind-spot monitoring, lane-keeping assist, and collision avoidance systems.\n\n4. Technology and Connectivity: Modern SUVs come equipped with features like touchscreen infotainment systems, Bluetooth connectivity, smartphone integration, USB ports, advanced navigation systems, and premium audio systems.\n\n5. Comfort and Luxury: SUVs from luxury brands offer plush interiors, high-quality materials, luxurious seating options, climate control systems, panoramic sunroofs, and advanced driver-assist features.\n\n6. Towing Capacity: Many SUVs are designed with towing capabilities, allowing them to haul trailers or boats.\n\nNow, based on Car and Driver reviews, here are some recommended SUV models from Mercedes-Benz:\n\n1. Mercedes-Benz GLE: The GLE offers a comfortable and luxurious cabin, advanced safety features, a powerful engine lineup, and excellent off-road capabilities. It provides a smooth ride and comes with various tech features like a large infotainment display, smartphone integration, and a host of driver-assist systems.\n\n2. Mercedes-Benz GLC: The GLC combines style, comfort, and performance. It features a well-appointed interior, a user-friendly infotainment system, a smooth ride, and a range of engine options. Additionally, it offers good fuel economy and advanced safety features.\n\n3. Mercedes-Benz GLS: The GLS is a large luxury SUV that provides ample seating and cargo space. It offers a comfortable ride, powerful engine choices, advanced technology features, and a refined interior. The GLS also provides excellent towing capacity and a plethora of safety features.\n\nIn terms of reliability, Mercedes-Benz SUVs generally have a good reputation, but like any vehicle, they may encounter some common problems. These can include electrical issues, transmission problems, and occasional brake or suspension concerns. However, regular maintenance and servicing can help mitigate these problems.\n\nMaintenance and cost of operation for Mercedes-Benz SUVs can be higher compared to non-luxury brands due to the premium nature of the vehicles. Genuine parts and specialized servicing can contribute to higher maintenance costs.\n\nWhen it comes to pricing, Mercedes-Benz SUVs tend to be on the higher end of the spectrum due to their luxury status. Prices can vary depending on the specific model, trim level, optional features, and region.\n\nUser experience with Mercedes-Benz SUVs is generally positive, with drivers appreciating the comfort, performance, and advanced features. However, personal preferences and experiences can vary.\n\nUltimately, it is recommended to visit a Mercedes-Benz dealership, consult the official website, or refer to trusted automotive sources for the most accurate and up-to-date information on features, pricing, reliability, and common problems associated with specific Mercedes-Benz SUV models.",
@@ -381,15 +381,15 @@ http://localhost:8080/carcostapi/recommendation?type=SUV&make=Mercedes-Benz. The
 
 ### POST Adding a Car Listing
 
-A common use case for a car listing service is when a user wants to put their car up for listing. CarCostAPI easily
-allows for this to happen via a `POST` request to the URL extension `carcostapi/add_car`. You simply pass a `CarData`
-object as the response body, without an `Id` (one is generated for the listing automatically) and CarCostAPI will add it
+A common use case for a car listing service is when a user wants to put their car up for listing. CarCartAPI easily
+allows for this to happen via a `POST` request to the URL extension `carcartapi/add_car`. You simply pass a `CarData`
+object as the response body, without an `Id` (one is generated for the listing automatically) and CarCartAPI will add it
 to the MySQL database. It will also return the added `CarData` object for the user's reference.
 
 #### Example
 
 For example, assume you wanted to add a listing for your 2011 Lexus IS250 that you are going to sell. You would send
-a `POST` request to http://localhost:8080/carcostapi/add_car with the response body as follows:
+a `POST` request to http://localhost:8080/carcartapi/add_car with the response body as follows:
 
 ```json
 {
@@ -423,7 +423,7 @@ reference!
 ### PUT Updating a Car Listing
 
 Oftentimes, the user may want to update the specifications of their listing to attract more customers. This can be done
-using the `PUT` request to CarCostAPI at the URL extension `carcostapi/update_car`. You can provide the following
+using the `PUT` request to CarCartAPI at the URL extension `carcartapi/update_car`. You can provide the following
 optional parameters to update after providing the mandatory `id` parameter in the URL:
 
 * Updated `price`
@@ -434,12 +434,12 @@ optional parameters to update after providing the mandatory `id` parameter in th
 * New `state`
 * New `zip`
 
-Then, CarCostAPI will update the matching entry and also return the updated `CarData` object for your reference.
+Then, CarCartAPI will update the matching entry and also return the updated `CarData` object for your reference.
 
 #### Example
 
 Assume you wanted to update the price for your 2011 Lexus IS250 you put on sale in the `POST` example with `id = 32568`.
-You can simply send a `PUT` request to http://localhost:8080/carcostapi/update_car?id=32568&price=10000. This will then
+You can simply send a `PUT` request to http://localhost:8080/carcartapi/update_car?id=32568&price=10000. This will then
 update the entry and return the following `CarData` object:
 
 ```json
@@ -474,14 +474,14 @@ Note the price has changed from 13000 to 10000
 ### DELETE Car Listing
 
 Assuming a user's car has been sold, they would like to remove the listing. This can be done by sending the `DELETE`
-request to CarCostAPI at the URL Extension `carcostapi/delete_car` with the `id` of the listing you would like to
+request to CarCartAPI at the URL Extension `carcartapi/delete_car` with the `id` of the listing you would like to
 delete. THis will also return the deleted `CarData` object for your reference.
 
 #### Example
 
 Assume your 2011 Lexus IS250 has been sold with `id = 32568`. Then, you can delete it from the database by sending
-a `DELETE` request to http://localhost:8080/carcostapi/delete_car?id=32568. This will delete your listing and return the
-deleted `CarCost` object:
+a `DELETE` request to http://localhost:8080/carcartapi/delete_car?id=32568. This will delete your listing and return the
+deleted `CarData` object:
 
 ```json
 {
@@ -512,24 +512,24 @@ deleted `CarCost` object:
 
 ### Multithreading
 
-All calls to CarCostAPI are multithreaded using Spring Boot `@Async` calls and `ThreadPoolTaskExecutor`. This includes:
+All calls to CarCartAPI are multithreaded using Spring Boot `@Async` calls and `ThreadPoolTaskExecutor`. This includes:
 
 1. Controller Requests
 2. ChatGPT API calls
 3. Database Requests
 
-This makes CarCostAPI much faster. The main limiting speed for CarCostAPI from my testing is the ChatGPT API. If we
+This makes CarCartAPI much faster. The main limiting speed for CarCartAPI from my testing is the ChatGPT API. If we
 utilize the
 enterprise license and key, then it should be much faster, since OpenAI reserves resources for enterprises. But
 currently I have a
 cheap consumer license, and that is good enough for reasonably fast speeds under ~15 seconds. All configuration for
 Multithreading is done in
-the `CarCostAPIConfiguration` class. Please see the design flow chart to understand how this is handled.
+the `CarCartAPIConfiguration` class. Please see the design flow chart to understand how this is handled.
 
 ## Example of a Full GET API Call
 
 The full API call includes both the `chatGptInfo` and `databaseListings` object. Assume you are searching for a Lexus GX
-using the following URL: http://localhost:8080/carcostapi/search_model?make=Lexus&model=GX. This would return the
+using the following URL: http://localhost:8080/carcartapi/search_model?make=Lexus&model=GX. This would return the
 following
 JSON result:
 

@@ -1,13 +1,12 @@
-package com.carcost.CarCostAPI;
+package com.carcart.CarCartAPI;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 @Repository
-public interface CarCostAPIRepository extends JpaRepository<CarData, Integer> {
+public interface CarCartAPIRepository extends JpaRepository<CarData, Integer> {
 
     // Standard JPA Repository Functions
     List<CarData> findAllByMakeContaining(String make);

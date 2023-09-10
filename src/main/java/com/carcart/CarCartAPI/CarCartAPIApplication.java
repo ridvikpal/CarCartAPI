@@ -1,13 +1,13 @@
-package com.carcost.CarCostAPI;
+package com.carcart.CarCartAPI;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CarCostAPIApplication {
+public class CarCartAPIApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CarCostAPIApplication.class, args);
+		SpringApplication.run(CarCartAPIApplication.class, args);
 	}
 
 }
