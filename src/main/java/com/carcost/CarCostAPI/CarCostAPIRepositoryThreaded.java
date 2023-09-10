@@ -29,7 +29,7 @@ public class CarCostAPIRepositoryThreaded {
         List<CarData> result = carCostAPIRepository.findAllByMakeContaining(make);
         long end = System.currentTimeMillis();
         logger.info("Ending thread for returning make listings from database on {}", Thread.currentThread().getName());
-        logger.info("Completed returning make listings from database in {}", (end - start));
+        logger.info("Completed returning make listings from database in {} ms", (end - start));
         return CompletableFuture.completedFuture(result);
     }
 
@@ -41,7 +41,7 @@ public class CarCostAPIRepositoryThreaded {
         List<CarData> result = carCostAPIRepository.findAllByBodyTypeContaining(type);
         long end = System.currentTimeMillis();
         logger.info("Ending thread for returning type listings from database on {}", Thread.currentThread().getName());
-        logger.info("Completed returning type listings from database in {}", (end - start));
+        logger.info("Completed returning type listings from database in {} ms", (end - start));
         return CompletableFuture.completedFuture(result);
     }
 
@@ -53,7 +53,7 @@ public class CarCostAPIRepositoryThreaded {
         List<CarData> result = carCostAPIRepository.findAllByBodyTypeContainingAndMakeContaining(type, make);
         long end = System.currentTimeMillis();
         logger.info("Ending thread for returning type listings with specific make from database on {}", Thread.currentThread().getName());
-        logger.info("Completed returning type listings with specific make from database in {}", (end - start));
+        logger.info("Completed returning type listings with specific make from database in {} ms", (end - start));
         return CompletableFuture.completedFuture(result);
     }
 
@@ -65,7 +65,7 @@ public class CarCostAPIRepositoryThreaded {
         List<CarData> result = carCostAPIRepository.findAllByMakeContainingOrderByPriceAsc(make);
         long end = System.currentTimeMillis();
         logger.info("Ending thread for returning make listings ordered by low price from database on {}", Thread.currentThread().getName());
-        logger.info("Completed returning make listings ordered by low price from database in {}", (end - start));
+        logger.info("Completed returning make listings ordered by low price from database in {} ms", (end - start));
         return CompletableFuture.completedFuture(result);
     }
 
@@ -77,7 +77,7 @@ public class CarCostAPIRepositoryThreaded {
         List<CarData> result = carCostAPIRepository.findAllByMakeContainingAndModelContainingOrderByPriceAsc(make, model);
         long end = System.currentTimeMillis();
         logger.info("Ending thread for returning model listings ordered by low price from database on {}", Thread.currentThread().getName());
-        logger.info("Completed returning model listings ordered by low price from database in {}", (end - start));
+        logger.info("Completed returning model listings ordered by low price from database in {} ms", (end - start));
         return CompletableFuture.completedFuture(result);
     }
     
@@ -88,7 +88,7 @@ public class CarCostAPIRepositoryThreaded {
         List<CarData> result = carCostAPIRepository.findAllByMakeContainingAndModelContaining(make, model);
         long end = System.currentTimeMillis();
         logger.info("Ending thread for returning model listings from database on {}", Thread.currentThread().getName());
-        logger.info("Completed returning model listings from database in {}", (end - start));
+        logger.info("Completed returning model listings from database in {} ms", (end - start));
         return CompletableFuture.completedFuture(result);
     }
 
@@ -100,13 +100,13 @@ public class CarCostAPIRepositoryThreaded {
         if (alreadyExists){
             long end = System.currentTimeMillis();
             logger.info("Ending thread for adding new car listing to database on {}", Thread.currentThread().getName());
-            logger.info("Completed returning adding new car listing to database in {}", (end - start));
+            logger.info("Completed returning adding new car listing to database in {} ms", (end - start));
             return null;
         }
         CarData newEntry = carCostAPIRepository.save(carData);
         long end = System.currentTimeMillis();
         logger.info("Ending thread for adding new car listing to database on {}", Thread.currentThread().getName());
-        logger.info("Completed returning adding new car listing to database in {}", (end - start));
+        logger.info("Completed returning adding new car listing to database in {} ms", (end - start));
         return CompletableFuture.completedFuture(newEntry);
     }
 
@@ -141,7 +141,7 @@ public class CarCostAPIRepositoryThreaded {
 
         long end = System.currentTimeMillis();
         logger.info("Ending thread for updating car listing in database on {}", Thread.currentThread().getName());
-        logger.info("Completed updating car listing in database in {}", (end - start));
+        logger.info("Completed updating car listing in database in {} ms", (end - start));
         return CompletableFuture.completedFuture(carData);
     }
     
@@ -156,7 +156,7 @@ public class CarCostAPIRepositoryThreaded {
 
         long end = System.currentTimeMillis();
         logger.info("Ending thread for deleting car listing in database on {}", Thread.currentThread().getName());
-        logger.info("Completed deleting car listing in database in {}", (end - start));
+        logger.info("Completed deleting car listing in database in {} ms", (end - start));
         return CompletableFuture.completedFuture(carDataCopy);
     }
 }

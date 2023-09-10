@@ -70,7 +70,7 @@ public class ChatGPTConnection {
         ));
         long end = System.currentTimeMillis();
         logger.info("Ending thread for returning chatgpt make info on {}", Thread.currentThread().getName());
-        logger.info("Completed returning chatpgt make info in {}", (end - start));
+        logger.info("Completed returning chatpgt make info in {} ms", (end - start));
         return result;
     }
 
@@ -94,7 +94,7 @@ public class ChatGPTConnection {
         }
         long end = System.currentTimeMillis();
         logger.info("Ending thread for returning chatgpt model info on {}", Thread.currentThread().getName());
-        logger.info("Completed returning chatpgt model info in {}", (end - start));
+        logger.info("Completed returning chatpgt model info in {} ms", (end - start));
         return result;
     }
 
@@ -124,7 +124,7 @@ public class ChatGPTConnection {
         }
         long end = System.currentTimeMillis();
         logger.info("Ending thread for returning chatgpt type recommendation info on {}", Thread.currentThread().getName());
-        logger.info("Completed returning chatpgt type recommendation info in {}", (end - start));
+        logger.info("Completed returning chatpgt type recommendation info in {} ms", (end - start));
         return result;
     }
 }
