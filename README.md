@@ -32,7 +32,7 @@
 
 ## Introduction
 
-![Browser API Call](C:\Users\ridvikpal\OneDrive - University of Toronto\Documents\Java Programming\CarCartAPI\src\main\resources\images\browser_api_call.png)
+![Browser API Call](src/main/resources/images/browser_api_call.png)
 
 CarCartAPI is a RESTful API that aggregates and manages used car data and information about these cars via a MySQL database and the OpenAPI ChatGPT 3.5
 AI model. It is built using Java, Spring Boot, Maven, MySQL and of course OpenAI's own RESTful API for ChatGPT. It obeys
