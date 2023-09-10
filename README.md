@@ -1,27 +1,35 @@
 # CarCostAPI
 
 <!-- TOC -->
+
 * [CarCostAPI](#carcostapi)
-  * [Introduction](#introduction)
-  * [Goals](#goals)
-  * [Maven Dependencies](#maven-dependencies)
-  * [Configuration for Application Properties File](#configuration-for-application-properties-file)
-  * [Design](#design)
-  * [Features](#features)
-    * [Used Car Listings](#used-car-listings)
-      * [Find a Specific Make](#find-a-specific-make)
-        * [Example](#example)
-      * [Return a Specific Make and Model](#return-a-specific-make-and-model)
-        * [Example](#example-1)
-      * [Return a Specific Type and Make](#return-a-specific-type-and-make)
-        * [Example](#example-2)
-    * [OpenAI ChatGPT Integration](#openai-chatgpt-integration)
-      * [Example for Make Search](#example-for-make-search)
-      * [Example for Model Search](#example-for-model-search)
-      * [Example for Car Type Recommendation](#example-for-car-type-recommendation)
-    * [Multithreading](#multithreading)
-  * [Example of a Full API Call](#example-of-a-full-api-call)
-  * [Features to Implement in the Future](#features-to-implement-in-the-future)
+    * [Introduction](#introduction)
+    * [Goals](#goals)
+    * [Maven Dependencies](#maven-dependencies)
+    * [Configuration for Application Properties File](#configuration-for-application-properties-file)
+    * [Design](#design)
+    * [Features](#features)
+        * [GET Used Car Listings](#get-used-car-listings)
+            * [Find a Specific Make](#find-a-specific-make)
+                * [Example](#example)
+            * [Return a Specific Make and Model](#return-a-specific-make-and-model)
+                * [Example](#example-1)
+            * [Return a Specific Type and Make](#return-a-specific-type-and-make)
+                * [Example](#example-2)
+        * [GET OpenAI ChatGPT Integration](#get-openai-chatgpt-integration)
+            * [Example for Make Search](#example-for-make-search)
+            * [Example for Model Search](#example-for-model-search)
+            * [Example for Car Type Recommendation](#example-for-car-type-recommendation)
+        * [POST Adding a Car Listing](#post-adding-a-car-listing)
+            * [Example](#example-3)
+        * [PUT Updating a Car Listing](#put-updating-a-car-listing)
+            * [Example](#example-4)
+        * [DELETE Car Listing](#delete-car-listing)
+            * [Example](#example-5)
+        * [Multithreading](#multithreading)
+    * [Example of a Full GET API Call](#example-of-a-full-get-api-call)
+    * [Features to Implement in the Future](#features-to-implement-in-the-future)
+
 <!-- TOC -->
 
 ## Introduction
@@ -83,7 +91,8 @@ spring.mvc.async.request-timeout=30m
 You must provide your own OpenAI key and MySQL database. I have tested the API with a MySQL database preloaded with a
 table containing used car data
 from [here](http://www.kaggle.com/datasets/rupeshraundal/marketcheck-automotive-data-us-canada). However, the API will
-work with any MySQL database with car data, albeit with a bit of modification (changing column names in the Spring `@Entity`
+work with any MySQL database with car data, albeit with a bit of modification (changing column names in the
+Spring `@Entity`
 class and modifying function names in the `@Repository` class). Ideally, the database would be large (the one I used has
 7 million entries) and should have aggregated across lots of different websites.
 
@@ -97,15 +106,19 @@ the following flow diagram:
 
 CarCostAPI has common features for an auto listing API, with the addition of ChatGPT! This means using CarCostAPI,
 someone could easily setup a website with no extra backend work; All that is needed is to provide a front end (View)!
-Actually, I am planning to create an auto listings website using CarCostAPI when I get the time!
+Actually, I am planning to create an auto listings website using CarCostAPI when I get the time! All items are returned
+with as industry standard JSON objects
 
-### Used Car Listings
+### GET Used Car Listings
 
-Used car listings are returned in a `databaseListings` JSON Object. You can find specific makes, models and car types. Note this data comes from a MySQL database. Therefore, you must have such a database and set it up in the `application.properties` file. See the `application.properties` section for more information
+Used car listings can be returned in a `databaseListings` array made up of `CarData` objects via a `GET` request. You
+can find specific makes, models and car types. Note this data comes from a MySQL database. Therefore, you must have such
+a database and set it up in the `application.properties` file. See the `application.properties` section for more
+information
 
 #### Find a Specific Make
 
-You can easily find used car listings for a specific make using the URL
+You can easily find used car listings for a specific make by sending a `GET` request to the URL
 extension `carcostapi/search_make`. You must provide the `String`
 parameter `make`. You can also provide another optional `boolean` parameter called `low_price` to sort the listings by
 the lowest price.
@@ -117,54 +130,54 @@ URL: http://localhost:8080/carcostapi/search_make?make=Ferrari. This would then 
 
 ```json
 "databaseListings": [
-{
-"id": 127,
-"guid": "0658ae22-42ab",
-"vin": "ZFF83CLA8K0243317",
-"price": "395990",
-"miles": "4892",
-"year": "2019",
-"make": "Ferrari",
-"model": "812",
-"trim": "Base",
-"drivetrain": "RWD",
-"stockNo": "PN164",
-"bodyType": "Coupe",
-"vehicleType": "Car",
-"fuelType": "Premium Unleaded",
-"engineSize": "6.5",
-"engineBlock": "V",
-"sellerName": "wide world ferrari",
-"transmission": "Automatic",
-"street": "101 Route 59",
-"city": "Spring Valley",
-"state": "NY",
-"zip": "10977"
-},
-{
-"id": 195,
-"guid": "aaf0584c-f27d",
-"vin": "ZFF78VHA0F0213610",
-"price": "679985",
-"miles": "1299",
-"year": "2015",
-"make": "Ferrari",
-"model": "458 Speciale A",
-"trim": "Base",
-"drivetrain": "RWD",
-"stockNo": "T213610",
-"bodyType": "Convertible",
-"vehicleType": "Car",
-"fuelType": "Unleaded",
-"engineSize": "4.5",
-"engineBlock": "V",
-"sellerName": "maserati of central florida",
-"transmission": "Automatic",
-"street": "4891 Vineland Rd",
-"city": "Orlando",
-"state": "FL",
-"zip": "32811"
-},
+    {
+    "id": 127,
+    "guid": "0658ae22-42ab",
+    "vin": "ZFF83CLA8K0243317",
+    "price": "395990",
+    "miles": "4892",
+    "year": "2019",
+    "make": "Ferrari",
+    "model": "812",
+    "trim": "Base",
+    "drivetrain": "RWD",
+    "stockNo": "PN164",
+    "bodyType": "Coupe",
+    "vehicleType": "Car",
+    "fuelType": "Premium Unleaded",
+    "engineSize": "6.5",
+    "engineBlock": "V",
+    "sellerName": "wide world ferrari",
+    "transmission": "Automatic",
+    "street": "101 Route 59",
+    "city": "Spring Valley",
+    "state": "NY",
+    "zip": "10977"
+    },
+    {
+    "id": 195,
+    "guid": "aaf0584c-f27d",
+    "vin": "ZFF78VHA0F0213610",
+    "price": "679985",
+    "miles": "1299",
+    "year": "2015",
+    "make": "Ferrari",
+    "model": "458 Speciale A",
+    "trim": "Base",
+    "drivetrain": "RWD",
+    "stockNo": "T213610",
+    "bodyType": "Convertible",
+    "vehicleType": "Car",
+    "fuelType": "Unleaded",
+    "engineSize": "4.5",
+    "engineBlock": "V",
+    "sellerName": "maserati of central florida",
+    "transmission": "Automatic",
+    "street": "4891 Vineland Rd",
+    "city": "Orlando",
+    "state": "FL",
+    "zip": "32811"
+    },
 ...
 ```
 
@@ -172,8 +185,9 @@ Note it is not sorted by the lowest price because we have not specified the `low
 
 #### Return a Specific Make and Model
 
-You can easily find used car listings for a specific make and model using the URL
-extension `carcostapi/search_model`. You must provide the `String` parameters `make` and `model`. You can also provide another optional `boolean` parameter
+You can easily find used car listings for a specific make and model by sending a `GET` request the URL
+extension `carcostapi/search_model`. You must provide the `String` parameters `make` and `model`. You can also provide
+another optional `boolean` parameter
 called `low_price` to sort the listings by the lowest price.
 
 ##### Example
@@ -185,54 +199,54 @@ This would then return the following information:
 
 ```json
 "databaseListings": [
-{
-"id": 23146,
-"guid": "0b876cf0-2b4a",
-"vin": "ZFF75VFA4E0203463",
-"price": "",
-"miles": "6585",
-"year": "2014",
-"make": "Ferrari",
-"model": "458 Speciale",
-"trim": "Base",
-"drivetrain": "RWD",
-"stockNo": "C19165",
-"bodyType": "Coupe",
-"vehicleType": "Car",
-"fuelType": "Premium Unleaded",
-"engineSize": "4.5",
-"engineBlock": "V",
-"sellerName": "the collection maserati",
-"transmission": "Automatic",
-"street": "200 Bird Rd",
-"city": "Coral Gables",
-"state": "FL",
-"zip": "33146"
-},
-{
-"id": 7892,
-"guid": "95e151bc-9626",
-"vin": "ZFF67NFA9A0175322",
-"price": "142998",
-"miles": "61179",
-"year": "2010",
-"make": "Ferrari",
-"model": "458 Italia",
-"trim": "Base",
-"drivetrain": "RWD",
-"stockNo": "",
-"bodyType": "Coupe",
-"vehicleType": "Car",
-"fuelType": "Premium Unleaded",
-"engineSize": "4.5",
-"engineBlock": "V",
-"sellerName": "carrio motor cars",
-"transmission": "Automatic",
-"street": "2300 North State Road 7",
-"city": "Lauderdale Lakes",
-"state": "FL",
-"zip": "33313"
-},
+    {
+    "id": 23146,
+    "guid": "0b876cf0-2b4a",
+    "vin": "ZFF75VFA4E0203463",
+    "price": "",
+    "miles": "6585",
+    "year": "2014",
+    "make": "Ferrari",
+    "model": "458 Speciale",
+    "trim": "Base",
+    "drivetrain": "RWD",
+    "stockNo": "C19165",
+    "bodyType": "Coupe",
+    "vehicleType": "Car",
+    "fuelType": "Premium Unleaded",
+    "engineSize": "4.5",
+    "engineBlock": "V",
+    "sellerName": "the collection maserati",
+    "transmission": "Automatic",
+    "street": "200 Bird Rd",
+    "city": "Coral Gables",
+    "state": "FL",
+    "zip": "33146"
+    },
+    {
+    "id": 7892,
+    "guid": "95e151bc-9626",
+    "vin": "ZFF67NFA9A0175322",
+    "price": "142998",
+    "miles": "61179",
+    "year": "2010",
+    "make": "Ferrari",
+    "model": "458 Italia",
+    "trim": "Base",
+    "drivetrain": "RWD",
+    "stockNo": "",
+    "bodyType": "Coupe",
+    "vehicleType": "Car",
+    "fuelType": "Premium Unleaded",
+    "engineSize": "4.5",
+    "engineBlock": "V",
+    "sellerName": "carrio motor cars",
+    "transmission": "Automatic",
+    "street": "2300 North State Road 7",
+    "city": "Lauderdale Lakes",
+    "state": "FL",
+    "zip": "33313"
+    },
 ...
 ```
 
@@ -240,9 +254,9 @@ Notice that the entries with no price are listed first, since we are sorting by 
 
 #### Return a Specific Type and Make
 
-You can easily find used car listings and for a specific type of car using the URL
+You can easily find used car listings and for a specific type of car by sending a `GET` request to the URL
 extension: `carcostapi/recommendation`. You must provide the`String`
-parameter `type`. You can also provide an optional `String` parameter `make` to find listings for a particular type 
+parameter `type`. You can also provide an optional `String` parameter `make` to find listings for a particular type
 of car from a specific manufacturer.
 
 ##### Example
@@ -253,65 +267,66 @@ information:
 
 ```json
 "databaseListings": [
-{
-"id": 43,
-"guid": "f454a84d-ced8",
-"vin": "4JGBF7BE4BA647986",
-"price": "16055",
-"miles": "159645",
-"year": "2011",
-"make": "Mercedes-Benz",
-"model": "GL-Class",
-"trim": "GL450",
-"drivetrain": "4WD",
-"stockNo": "B117986",
-"bodyType": "SUV",
-"vehicleType": "Truck",
-"fuelType": "Premium Unleaded",
-"engineSize": "4.7",
-"engineBlock": "V",
-"sellerName": "ciocca chevrolet of west chester",
-"transmission": "Automatic",
-"street": "715 Autopark Blvd",
-"city": "West Chester",
-"state": "PA",
-"zip": "19382"
-},
-{
-"id": 87,
-"guid": "3592b0c4-64b8",
-"vin": "4JGDF7DE3FA579286",
-"price": "28595",
-"miles": "93805",
-"year": "2015",
-"make": "Mercedes-Benz",
-"model": "GL-Class",
-"trim": "GL550",
-"drivetrain": "4WD",
-"stockNo": "J21205-2",
-"bodyType": "SUV",
-"vehicleType": "Truck",
-"fuelType": "Premium Unleaded",
-"engineSize": "4.7",
-"engineBlock": "V",
-"sellerName": "jaguar dallas",
-"transmission": "Automatic",
-"street": "11400 North Central Expy",
-"city": "Dallas",
-"state": "TX",
-"zip": "75243"
-},
+    {
+    "id": 43,
+    "guid": "f454a84d-ced8",
+    "vin": "4JGBF7BE4BA647986",
+    "price": "16055",
+    "miles": "159645",
+    "year": "2011",
+    "make": "Mercedes-Benz",
+    "model": "GL-Class",
+    "trim": "GL450",
+    "drivetrain": "4WD",
+    "stockNo": "B117986",
+    "bodyType": "SUV",
+    "vehicleType": "Truck",
+    "fuelType": "Premium Unleaded",
+    "engineSize": "4.7",
+    "engineBlock": "V",
+    "sellerName": "ciocca chevrolet of west chester",
+    "transmission": "Automatic",
+    "street": "715 Autopark Blvd",
+    "city": "West Chester",
+    "state": "PA",
+    "zip": "19382"
+    },
+    {
+    "id": 87,
+    "guid": "3592b0c4-64b8",
+    "vin": "4JGDF7DE3FA579286",
+    "price": "28595",
+    "miles": "93805",
+    "year": "2015",
+    "make": "Mercedes-Benz",
+    "model": "GL-Class",
+    "trim": "GL550",
+    "drivetrain": "4WD",
+    "stockNo": "J21205-2",
+    "bodyType": "SUV",
+    "vehicleType": "Truck",
+    "fuelType": "Premium Unleaded",
+    "engineSize": "4.7",
+    "engineBlock": "V",
+    "sellerName": "jaguar dallas",
+    "transmission": "Automatic",
+    "street": "11400 North Central Expy",
+    "city": "Dallas",
+    "state": "TX",
+    "zip": "75243"
+    },
 ...
 ```
 
-### OpenAI ChatGPT Integration
+### GET OpenAI ChatGPT Integration
 
 OpenAI has ChatGPT integration in all it's functions. The idea is, ChatGPT could help users make a decision by providing
 them with information formatted in the way a friend would talk to you. For example, assume you are searching for a used
 Lexus ES (one of my personal favourite cars), ChatGPT can tell you about the car, what a good used price is, common
 problems with the car, and how it is reviewed by other people. Or if you were looking for a new SUV, then ChatGPT could
 recommend you 5 good SUVs based on, say Car and Driver (one of the most trusted car review companies) reviews. Thus,
-ChatGPT inherently improves your decision-making capability when buying a used car. The ChatGPT information is returned in
+ChatGPT inherently improves your decision-making capability when buying a used car. The ChatGPT information is returned
+in
 the `chatGptInfo` JSON object.
 
 #### Example for Make Search
@@ -342,22 +357,158 @@ http://localhost:8080/carcostapi/recommendation?type=SUV&make=Mercedes-Benz. The
 "chatGptInfo": "SUVs, or Sports Utility Vehicles, are a type of vehicle that combines elements of both passenger cars and off-road vehicles. They typically feature a high ground clearance, a spacious interior, and the ability to handle various terrains. Here are some common features found in SUVs:\n\n1. Size and Space: SUVs offer ample seating capacity for passengers and usually have a larger cargo area compared to sedans or hatchbacks.\n\n2. All-Wheel Drive (AWD) or Four-Wheel Drive (4WD): Many SUVs come with AWD or 4WD systems, enhancing their off-road capabilities and providing better traction on slippery or uneven surfaces.\n\n3. Safety Features: SUVs often include advanced safety features like stability control, traction control, anti-lock braking systems, multiple airbags, blind-spot monitoring, lane-keeping assist, and collision avoidance systems.\n\n4. Technology and Connectivity: Modern SUVs come equipped with features like touchscreen infotainment systems, Bluetooth connectivity, smartphone integration, USB ports, advanced navigation systems, and premium audio systems.\n\n5. Comfort and Luxury: SUVs from luxury brands offer plush interiors, high-quality materials, luxurious seating options, climate control systems, panoramic sunroofs, and advanced driver-assist features.\n\n6. Towing Capacity: Many SUVs are designed with towing capabilities, allowing them to haul trailers or boats.\n\nNow, based on Car and Driver reviews, here are some recommended SUV models from Mercedes-Benz:\n\n1. Mercedes-Benz GLE: The GLE offers a comfortable and luxurious cabin, advanced safety features, a powerful engine lineup, and excellent off-road capabilities. It provides a smooth ride and comes with various tech features like a large infotainment display, smartphone integration, and a host of driver-assist systems.\n\n2. Mercedes-Benz GLC: The GLC combines style, comfort, and performance. It features a well-appointed interior, a user-friendly infotainment system, a smooth ride, and a range of engine options. Additionally, it offers good fuel economy and advanced safety features.\n\n3. Mercedes-Benz GLS: The GLS is a large luxury SUV that provides ample seating and cargo space. It offers a comfortable ride, powerful engine choices, advanced technology features, and a refined interior. The GLS also provides excellent towing capacity and a plethora of safety features.\n\nIn terms of reliability, Mercedes-Benz SUVs generally have a good reputation, but like any vehicle, they may encounter some common problems. These can include electrical issues, transmission problems, and occasional brake or suspension concerns. However, regular maintenance and servicing can help mitigate these problems.\n\nMaintenance and cost of operation for Mercedes-Benz SUVs can be higher compared to non-luxury brands due to the premium nature of the vehicles. Genuine parts and specialized servicing can contribute to higher maintenance costs.\n\nWhen it comes to pricing, Mercedes-Benz SUVs tend to be on the higher end of the spectrum due to their luxury status. Prices can vary depending on the specific model, trim level, optional features, and region.\n\nUser experience with Mercedes-Benz SUVs is generally positive, with drivers appreciating the comfort, performance, and advanced features. However, personal preferences and experiences can vary.\n\nUltimately, it is recommended to visit a Mercedes-Benz dealership, consult the official website, or refer to trusted automotive sources for the most accurate and up-to-date information on features, pricing, reliability, and common problems associated with specific Mercedes-Benz SUV models.",
 ```
 
+### POST Adding a Car Listing
+
+A common use case for a car listing service is when a user wants to put their car up for listing. CarCostAPI easily
+allows for this to happen via a `POST` request to the URL extension `carcostapi/add_car`. You simply pass a `CarData`
+object as the response body, without an `Id` (one is generated for the listing automatically) and CarCostAPI will add it
+to the MySQL database. It will also return the added `CarData` object for the user's reference.
+
+#### Example
+
+For example, assume you wanted to add a listing for your 2011 Lexus IS250 that you are going to sell. You would send
+a `POST` request to http://localhost:8080/carcostapi/add_car with the response body as follows:
+
+```json
+{
+  "guid": "581d491a-903d",
+  "vin": "JTHFF2C26B2515141",
+  "price": "13000",
+  "miles": "100000",
+  "year": "2011",
+  "make": "Lexus",
+  "model": "IS250",
+  "trim": "Sport",
+  "drivetrain": "AWD",
+  "stockNo": "",
+  "bodyType": "Sedan",
+  "vehicleType": "Car",
+  "fuelType": "Unleaded",
+  "engineSize": "2.5",
+  "engineBlock": "V6",
+  "sellerName": "private seller",
+  "transmission": "Automatic",
+  "street": "5400 Westside Dr",
+  "city": "Dubuque",
+  "state": "IA",
+  "zip": "52003"
+}
+```
+
+Your lexus would then be added to the database with it's own ID, and the object would also be returned to you for your
+reference!
+
+### PUT Updating a Car Listing
+
+Oftentimes, the user may want to update the specifications of their listing to attract more customers. This can be done
+using the `PUT` request to CarCostAPI at the URL extension `carcostapi/update_car`. You can provide the following
+optional parameters to update after providing the mandatory `id` parameter in the URL:
+
+* Updated `price`
+* Updated mileage as `miles`
+* New seller name as `seller name`
+* New `street`
+* New `city`
+* New `state`
+* New `zip`
+
+Then, CarCostAPI will update the matching entry and also return the updated `CarData` object for your reference.
+
+#### Example
+
+Assume you wanted to update the price for your 2011 Lexus IS250 you put on sale in the `POST` example with `id = 32568`.
+You can simply send a `PUT` request to http://localhost:8080/carcostapi/update_car?id=32568&price=10000. This will then
+update the entry and return the following `CarData` object:
+
+```json
+{
+  "id": 32568
+  "guid": "581d491a-903d",
+  "vin": "JTHFF2C26B2515141",
+  "price": "10000",
+  "miles": "100000",
+  "year": "2011",
+  "make": "Lexus",
+  "model": "IS250",
+  "trim": "Sport",
+  "drivetrain": "AWD",
+  "stockNo": "",
+  "bodyType": "Sedan",
+  "vehicleType": "Car",
+  "fuelType": "Unleaded",
+  "engineSize": "2.5",
+  "engineBlock": "V6",
+  "sellerName": "private seller",
+  "transmission": "Automatic",
+  "street": "5400 Westside Dr",
+  "city": "Dubuque",
+  "state": "IA",
+  "zip": "52003"
+}
+```
+
+Note the price has changed from 13000 to 10000
+
+### DELETE Car Listing
+
+Assuming a user's car has been sold, they would like to remove the listing. This can be done by sending the `DELETE`
+request to CarCostAPI at the URL Extension `carcostapi/delete_car` with the `id` of the listing you would like to
+delete. THis will also return the deleted `CarData` object for your reference.
+
+#### Example
+
+Assume your 2011 Lexus IS250 has been sold with `id = 32568`. Then, you can delete it from the database by sending
+a `DELETE` request to http://localhost:8080/carcostapi/delete_car?id=32568. This will delete your listing and return the
+deleted `CarCost` object:
+
+```json
+{
+  "id": 32568
+  "guid": "581d491a-903d",
+  "vin": "JTHFF2C26B2515141",
+  "price": "10000",
+  "miles": "100000",
+  "year": "2011",
+  "make": "Lexus",
+  "model": "IS250",
+  "trim": "Sport",
+  "drivetrain": "AWD",
+  "stockNo": "",
+  "bodyType": "Sedan",
+  "vehicleType": "Car",
+  "fuelType": "Unleaded",
+  "engineSize": "2.5",
+  "engineBlock": "V6",
+  "sellerName": "private seller",
+  "transmission": "Automatic",
+  "street": "5400 Westside Dr",
+  "city": "Dubuque",
+  "state": "IA",
+  "zip": "52003"
+}
+```
+
 ### Multithreading
 
 All calls to CarCostAPI are multithreaded using Spring Boot `@Async` calls and `ThreadPoolTaskExecutor`. This includes:
+
 1. Controller Requests
 2. ChatGPT API calls
 3. Database Requests
 
-This makes CarCostAPI much faster. The main limiting speed for CarCostAPI from my testing is the ChatGPT API. If we utilize the
-enterprise license and key, then it should be much faster, since OpenAI reserves resources for enterprises. But currently I have a 
-cheap consumer license, and that is good enough for reasonably fast speeds under ~15 seconds. All configuration for Multithreading is done in 
+This makes CarCostAPI much faster. The main limiting speed for CarCostAPI from my testing is the ChatGPT API. If we
+utilize the
+enterprise license and key, then it should be much faster, since OpenAI reserves resources for enterprises. But
+currently I have a
+cheap consumer license, and that is good enough for reasonably fast speeds under ~15 seconds. All configuration for
+Multithreading is done in
 the `CarCostAPIConfiguration` class. Please see the design flow chart to understand how this is handled.
 
-## Example of a Full API Call
+## Example of a Full GET API Call
 
 The full API call includes both the `chatGptInfo` and `databaseListings` object. Assume you are searching for a Lexus GX
-using the following URL: http://localhost:8080/carcostapi/search_model?make=Lexus&model=GX. This would return the following
+using the following URL: http://localhost:8080/carcostapi/search_model?make=Lexus&model=GX. This would return the
+following
 JSON result:
 
 ```json
@@ -421,7 +572,6 @@ There are lots of features I would like to implement once I get the time:
 
 * Filtering entries by date. For example, the user may only like to see listings between a specific range, or sort by
   the newest listings first.
-* Enable POST request to add listing to the database. This would simulate a user wanting to put their car up for sale!
 * Sorting by car trim. For example, the user may only want the Touring Version of the Honda Civic.
 * Sorting by car specifications, including engine size, drivetrain, transmission, and fuel type. For example, a user may
   only want a car that is 4WD or AWD.
