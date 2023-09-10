@@ -1,6 +1,7 @@
 package com.carcost.CarCostAPI;
 
 import com.carcost.CarCostAPI.chatgpt.ChatGPTConnection;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +15,9 @@ import java.util.concurrent.ExecutionException;
 @Service
 public class CarCostAPIService {
 
-//    private final CarCostAPIRepository carCostAPIRepositoryImpl;
-
     private final CarCostAPIRepositoryThreaded carCostAPIRepositoryThreaded;
 
     private final ChatGPTConnection chatGPTConnection;
-
-    // create a new logger
-    Logger logger = LoggerFactory.getLogger(CarCostAPIService.class);
 
     @Autowired
     public CarCostAPIService(CarCostAPIRepositoryThreaded carCostAPIRepositoryThreaded, ChatGPTConnection chatGPTConnection) {
@@ -64,5 +60,27 @@ public class CarCostAPIService {
             matchingTypeEntries = carCostAPIRepositoryThreaded.threadedFindAllByBodyTypeContainingAndMakeContaining(_type, _make);
         }
         return CompletableFuture.completedFuture(new APIDataReturn(chatGptCarRecommendation.get(), matchingTypeEntries.get()));
+    }
+
+
+    @Async
+    public CompletableFuture<CarData> insertNewCarListing(CarData carData) {
+        CompletableFuture<CarData> result = carCostAPIRepositoryThreaded.threadedInsertIntoDatabase(carData);
+        return result;
+    }
+
+    @Async
+    @Transactional
+    public CompletableFuture<CarData> updateCarListing(int id, String price, String miles, String sellerName, String street, String city, String state, String zip) {
+        CompletableFuture<CarData> result = carCostAPIRepositoryThreaded.threadedUpdateInDatabase(
+                id, price, miles, sellerName, street, city, state, zip
+        );
+        return result;
+    }
+
+    @Async
+    public CompletableFuture<CarData> deleteCarListing(int id){
+        CompletableFuture<CarData> result = carCostAPIRepositoryThreaded.threadedDeleteFromDatabase(id);
+        return result;
     }
 }

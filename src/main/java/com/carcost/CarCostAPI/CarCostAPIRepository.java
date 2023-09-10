@@ -22,11 +22,4 @@ public interface CarCostAPIRepository extends JpaRepository<CarData, Integer> {
 
     List<CarData> findAllByMakeContainingAndModelContaining(String make, String model);
 
-    // Threaded versions of the JPA Repository Function
-//    public CompletableFuture<List<CarData>> threadedFindAllByMakeContaining(String make);
-//    public CompletableFuture<List<CarData>> threadedFindAllByBodyTypeContaining(String type);
-//    public CompletableFuture<List<CarData>> threadedFindAllByBodyTypeContainingAndMakeContaining(String type, String make);
-//    public CompletableFuture<List<CarData>> threadedFindAllByMakeContainingOrderByPriceAsc(String make);
-//    public CompletableFuture<List<CarData>> threadedFindAllByMakeContainingAndModelContainingOrderByPriceAsc(String make, String model);
-//    public CompletableFuture<List<CarData>> threadedFindAllByMakeContainingAndModelContaining(String make, String model);
 }

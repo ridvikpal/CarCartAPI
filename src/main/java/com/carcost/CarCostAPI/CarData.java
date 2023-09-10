@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "car_data")
 public class CarData {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String guid, vin, price, miles, year, make, model, trim, drivetrain;
 

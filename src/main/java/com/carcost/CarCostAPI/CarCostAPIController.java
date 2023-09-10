@@ -3,10 +3,7 @@ package com.carcost.CarCostAPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -61,5 +58,35 @@ public class CarCostAPIController {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @PostMapping(path = "/add_car")
+    public CompletableFuture<CarData> addNewCarListing(@RequestBody CarData carData){
+        CompletableFuture<CarData> carDataCompletableFuture = carCostAPIService.insertNewCarListing(carData);
+        return carDataCompletableFuture;
+    }
+
+    @PutMapping(path = "/update_car")
+    public CompletableFuture<CarData> updateCarListing(
+            @RequestParam int id,
+            @RequestParam(required = false) String price,
+            @RequestParam(required = false) String miles,
+            @RequestParam(required = false) String sellerName,
+            @RequestParam(required = false) String street,
+            @RequestParam(required = false) String city,
+            @RequestParam(required = false) String state,
+            @RequestParam(required = false) String zip
+
+    ){
+        CompletableFuture<CarData> carDataCompletableFuture = carCostAPIService.updateCarListing(
+                id, price, miles, sellerName, street, city, state, zip
+        );
+        return carDataCompletableFuture;
+    }
+
+    @DeleteMapping("/delete_car")
+    public CompletableFuture<CarData> deleteCarListing(@RequestParam int id){
+        CompletableFuture<CarData> carDataCompletableFuture = carCostAPIService.deleteCarListing(id);
+        return carDataCompletableFuture;
     }
 }
